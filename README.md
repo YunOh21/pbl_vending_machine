@@ -19,6 +19,14 @@ PBL_VENDING_MACHINE/
 └── requirements.txt
 ```
 
+## 설계
+- 시나리오: 고객이 음료 구매
+<img src="design/SequenceDiagram.jpg">
+- 클래스 다이어그램
+<img src="design/ClassDiagram.jpg">
+- 데이터베이스 구조
+<img src="design/ERD.png">
+
 ## 개발 환경
 |   |   |
 |---|---|
