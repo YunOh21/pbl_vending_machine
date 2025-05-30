@@ -83,19 +83,6 @@
    <property name="alignment">
     <set>Qt::AlignCenter</set>
    </property>
-   <widget class="QPushButton" name="pushButton_4">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>30</y>
-      <width>88</width>
-      <height>27</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>확인</string>
-    </property>
-   </widget>
   </widget>
   <widget class="QGroupBox" name="groupBox_3">
    <property name="geometry">
@@ -141,19 +128,6 @@
    <property name="alignment">
     <set>Qt::AlignCenter</set>
    </property>
-   <widget class="QPushButton" name="pushButton_6">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>30</y>
-      <width>88</width>
-      <height>27</height>
-     </rect>
-    </property>
-    <property name="text">
-     <string>확인</string>
-    </property>
-   </widget>
   </widget>
   <widget class="QGroupBox" name="groupBox_5">
    <property name="geometry">
@@ -183,6 +157,103 @@
      <string>CALL</string>
     </property>
    </widget>
+  </widget>
+  <widget class="QGroupBox" name="groupBox_6">
+   <property name="geometry">
+    <rect>
+     <x>10</x>
+     <y>20</y>
+     <width>501</width>
+     <height>291</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>상품선택</string>
+   </property>
+  </widget>
+  <widget class="QGroupBox" name="groupBox_7">
+   <property name="geometry">
+    <rect>
+     <x>520</x>
+     <y>20</y>
+     <width>111</width>
+     <height>291</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>추천해주세요!</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
+   <widget class="QPushButton" name="pushButton_7">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>30</y>
+      <width>88</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>졸려요</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_8">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>90</y>
+      <width>88</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>다이어트</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_10">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>150</y>
+      <width>88</width>
+      <height>51</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>탄산</string>
+    </property>
+   </widget>
+   <widget class="QPushButton" name="pushButton_11">
+    <property name="geometry">
+     <rect>
+      <x>10</x>
+      <y>210</y>
+      <width>88</width>
+      <height>61</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>무카페인</string>
+    </property>
+   </widget>
+  </widget>
+  <widget class="QGroupBox" name="groupBox_8">
+   <property name="geometry">
+    <rect>
+     <x>9</x>
+     <y>319</y>
+     <width>621</width>
+     <height>151</height>
+    </rect>
+   </property>
+   <property name="title">
+    <string>음료 나오는 곳</string>
+   </property>
+   <property name="alignment">
+    <set>Qt::AlignCenter</set>
+   </property>
   </widget>
  </widget>
  <resources/>
