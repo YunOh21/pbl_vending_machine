@@ -1,0 +1,5 @@
+nohup: ignoring input
+Traceback (most recent call last):
+  File "/home/erica_2291/pb_proj/pbl_vending_machine/ai/mp_svm_train.py", line 29, in <module>
+    for cls in os.listdir(train_root):
+FileNotFoundError: [Errno 2] No such file or directory: 'UCF_Crime_Split/train'
