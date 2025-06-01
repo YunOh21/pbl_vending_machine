@@ -20,8 +20,9 @@ PBL_VENDING_MACHINE/
 
 ## 설계
 - 시나리오: 고객이 음료 구매
-
-<img src="design/SequenceDiagram.jpg">
+<p align="center">
+  <img src="design/SequenceDiagram.jpg">
+</p>
 
 - 클래스 다이어그램
 <img src="design/ClassDiagram.jpg">
