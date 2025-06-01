@@ -1,9 +1,8 @@
 # <img src="assets/vending-machine.png" width="30"/>전지적 자판기 시점👀
 
 ## 소개
-- 평범한 음료 자판기에 클라우드 기반 관리 기능 및 상품 안내 기능을 추가했습니다.
-- AWS의 S3와 RDS를 사용하여 관리자/사용자에게 함께 보여야 할 데이터를 관리합니다.
-- MediaPipe 기반 Pose Estimation, SVM 기반 분류를 통해 이상 행동을 실시간으로 탐지합니다.
+- 평범한 음료 자판기에 관리 및 상품 안내 기능을 추가했습니다.
+- RDB(SQLite)로 관리자/사용자에게 함께 보여야 할 데이터를 관리합니다.
 
 ## 디렉토리 구조
 ```
@@ -19,11 +18,19 @@ PBL_VENDING_MACHINE/
 └── requirements.txt
 ```
 
+## 설계
+- 시나리오: 고객이 음료 구매
+<img src="design/SequenceDiagram.jpg">
+- 클래스 다이어그램
+<img src="design/ClassDiagram.jpg">
+- 데이터베이스 구조
+<img src="design/ERD.png">
+
 ## 개발 환경
 |   |   |
 |---|---|
-|개발환경|![Ubuntu](https://img.shields.io/badge/Ubuntu-E95420?style=for-the-badge&logo=Ubuntu&logoColor=white) ![Visual Studio Code](https://img.shields.io/badge/Visual%20Studio%20Code-007ACC?style=for-the-badge&logo=Visual%20Studio%20Code&logoColor=white) ![Git](https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=Git&logoColor=white) ![Github](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=GitHub&logoColor=white) ![RDS](https://img.shields.io/badge/AWS%20RDS-527FFF?style=for-the-badge&logo=Amazon%20RDS&logoColor=white) ![S3](https://img.shields.io/badge/AWS%20S3-569A31?style=for-the-badge&logo=Amazon%20S3&logoColor=white)||
-|기술|![Python](https://img.shields.io/badge/python-3776AB?style=for-the-badge&logo=python&logoColor=white) ![Mysql](https://img.shields.io/badge/mysql-4479A1?style=for-the-badge&logo=mysql&logoColor=white) ![Qt](https://img.shields.io/badge/Qt-41CD52?style=for-the-badge&logo=Qt&logoColor=white) ![Flask](https://img.shields.io/badge/flask-000000?style=for-the-badge&logo=flask&logoColor=white) ![ScikitLearn](https://img.shields.io/badge/scikitlearn-F7931E?style=for-the-badge&logo=scikitlearn&logoColor=white) ![MediaPipe](https://img.shields.io/badge/mediapipe-0097A7?style=for-the-badge&logo=mediapipe&logoColor=white)|
+|개발환경|![Ubuntu](https://img.shields.io/badge/Ubuntu-E95420?style=for-the-badge&logo=Ubuntu&logoColor=white) ![Visual Studio Code](https://img.shields.io/badge/Visual%20Studio%20Code-007ACC?style=for-the-badge&logo=Visual%20Studio%20Code&logoColor=white) ![Git](https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=Git&logoColor=white) ![Github](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=GitHub&logoColor=white)|
+|기술|![Python](https://img.shields.io/badge/python-3776AB?style=for-the-badge&logo=python&logoColor=white) ![SQLite+](https://img.shields.io/badge/sqlite-003B57?style=for-the-badge&logo=sqlite&logoColor=white) ![Qt](https://img.shields.io/badge/Qt-41CD52?style=for-the-badge&logo=Qt&logoColor=white) ![Flask](https://img.shields.io/badge/flask-000000?style=for-the-badge&logo=flask&logoColor=white) ![ScikitLearn](https://img.shields.io/badge/scikitlearn-F7931E?style=for-the-badge&logo=scikitlearn&logoColor=white) ![MediaPipe](https://img.shields.io/badge/mediapipe-0097A7?style=for-the-badge&logo=mediapipe&logoColor=white)|
 
 
 ## 시연 영상
@@ -36,8 +43,9 @@ pip install -r requirements.txt
 
 ### 1. 자판기
 - 자판기이므로 IoT로 구현가능하도록 PyQt로 UI를 제작했습니다.
+- 프로젝트 루트 디렉토리에서 아래 명령어로 실행해주세요.
 ```
-python3 main.py
+python -m ui.main_window
 ```
 
 ### 2. 자판기 관리자 (웹페이지)
@@ -46,10 +54,8 @@ python3 main.py
 python3 admin/app.py
 ```
 
-### 3. 이상행동 감지
-- 자판기 실행 시 함께 실행할 프로그램입니다.
-- 자판기에 부착된 카메라가 있다고 가정하고, 자판기 근처에서 이상행동(쓰러짐, 폭력 등)이 있을 경우 파악할 수 있습니다.
-- 개발 및 데모 영상 제작을 위해 UCF Crime Dataset을 사용했습니다.
-```
-python3 ai/pose_detector.py ai/demo.mp4
-```
+## 부가 기능: 이상행동 감지
+- 자판기에 부착된 카메라가 있다고 가정하고, 자판기 근처에서 이상행동(쓰러짐, 폭력 등)이 있을 경우 파악하고자 했습니다.
+- 개발을 위해 [UCF Crime Dataset](https://www.crcv.ucf.edu/research/real-world-anomaly-detection-in-surveillance-videos)을 사용했습니다.
+- 현재 개발된 모델은 예측 정확도가 매우 낮으므로, 시각인공지능 학습 후 개선이 필요합니다.
+<img src="assets/CCTV_mediapipe_with_random_forest.gif">
