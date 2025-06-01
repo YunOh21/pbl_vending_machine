@@ -1,0 +1,92 @@
+nohup: ignoring input
+vandalism (최대 5개):   0%|          | 0/5 [00:00<?, ?it/s]WARNING: All log messages before absl::InitializeLog() is called are written to STDERR
+I0000 00:00:1748356554.280985  262260 gl_context_egl.cc:85] Successfully initialized EGL. Major : 1 Minor: 5
+I0000 00:00:1748356554.345192  262429 gl_context.cc:369] GL version: 3.2 (OpenGL ES 3.2 NVIDIA 550.120), renderer: NVIDIA GeForce RTX 2080 Ti/PCIe/SSE2
+INFO: Created TensorFlow Lite XNNPACK delegate for CPU.
+W0000 00:00:1748356554.447721  262381 inference_feedback_manager.cc:114] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+W0000 00:00:1748356554.506037  262406 inference_feedback_manager.cc:114] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+W0000 00:00:1748356554.551040  262417 landmark_projection_calculator.cc:186] Using NORM_RECT without IMAGE_DIMENSIONS is only supported for the square ROI. Provide IMAGE_DIMENSIONS or use PROJECTION_MATRIX.
+vandalism (최대 5개):  20%|██        | 1/5 [00:14<00:57, 14.36s/it]I0000 00:00:1748356568.631304  262260 gl_context_egl.cc:85] Successfully initialized EGL. Major : 1 Minor: 5
+I0000 00:00:1748356568.667088  262534 gl_context.cc:369] GL version: 3.2 (OpenGL ES 3.2 NVIDIA 550.120), renderer: NVIDIA GeForce RTX 2080 Ti/PCIe/SSE2
+W0000 00:00:1748356568.765450  262489 inference_feedback_manager.cc:114] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+W0000 00:00:1748356568.824315  262511 inference_feedback_manager.cc:114] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+vandalism (최대 5개):  40%|████      | 2/5 [00:25<00:37, 12.48s/it]I0000 00:00:1748356579.787806  262260 gl_context_egl.cc:85] Successfully initialized EGL. Major : 1 Minor: 5
+I0000 00:00:1748356579.815064  262616 gl_context.cc:369] GL version: 3.2 (OpenGL ES 3.2 NVIDIA 550.120), renderer: NVIDIA GeForce RTX 2080 Ti/PCIe/SSE2
+W0000 00:00:1748356579.912498  262569 inference_feedback_manager.cc:114] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+W0000 00:00:1748356579.968278  262591 inference_feedback_manager.cc:114] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+vandalism (최대 5개):  60%|██████    | 3/5 [00:38<00:25, 12.86s/it]I0000 00:00:1748356593.097480  262260 gl_context_egl.cc:85] Successfully initialized EGL. Major : 1 Minor: 5
+I0000 00:00:1748356593.132819  262712 gl_context.cc:369] GL version: 3.2 (OpenGL ES 3.2 NVIDIA 550.120), renderer: NVIDIA GeForce RTX 2080 Ti/PCIe/SSE2
+W0000 00:00:1748356593.228076  262665 inference_feedback_manager.cc:114] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+W0000 00:00:1748356593.285971  262690 inference_feedback_manager.cc:114] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+vandalism (최대 5개):  80%|████████  | 4/5 [00:48<00:11, 11.55s/it]I0000 00:00:1748356602.635730  262260 gl_context_egl.cc:85] Successfully initialized EGL. Major : 1 Minor: 5
+I0000 00:00:1748356602.672114  262807 gl_context.cc:369] GL version: 3.2 (OpenGL ES 3.2 NVIDIA 550.120), renderer: NVIDIA GeForce RTX 2080 Ti/PCIe/SSE2
+W0000 00:00:1748356602.770395  262760 inference_feedback_manager.cc:114] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+W0000 00:00:1748356602.827392  262782 inference_feedback_manager.cc:114] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+vandalism (최대 5개): 100%|██████████| 5/5 [01:02<00:00, 12.52s/it]vandalism (최대 5개): 100%|██████████| 5/5 [01:02<00:00, 12.52s/it]
+normal (최대 5개):   0%|          | 0/5 [00:00<?, ?it/s]I0000 00:00:1748356616.870086  262260 gl_context_egl.cc:85] Successfully initialized EGL. Major : 1 Minor: 5
+I0000 00:00:1748356616.900438  262887 gl_context.cc:369] GL version: 3.2 (OpenGL ES 3.2 NVIDIA 550.120), renderer: NVIDIA GeForce RTX 2080 Ti/PCIe/SSE2
+W0000 00:00:1748356616.998098  262840 inference_feedback_manager.cc:114] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+W0000 00:00:1748356617.057143  262864 inference_feedback_manager.cc:114] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+normal (최대 5개):  20%|██        | 1/5 [00:10<00:41, 10.44s/it]I0000 00:00:1748356627.310026  262260 gl_context_egl.cc:85] Successfully initialized EGL. Major : 1 Minor: 5
+I0000 00:00:1748356627.343073  262982 gl_context.cc:369] GL version: 3.2 (OpenGL ES 3.2 NVIDIA 550.120), renderer: NVIDIA GeForce RTX 2080 Ti/PCIe/SSE2
+W0000 00:00:1748356627.439010  262937 inference_feedback_manager.cc:114] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+W0000 00:00:1748356627.496069  262955 inference_feedback_manager.cc:114] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+normal (최대 5개):  40%|████      | 2/5 [00:23<00:36, 12.04s/it]I0000 00:00:1748356640.462628  262260 gl_context_egl.cc:85] Successfully initialized EGL. Major : 1 Minor: 5
+I0000 00:00:1748356640.497809  263077 gl_context.cc:369] GL version: 3.2 (OpenGL ES 3.2 NVIDIA 550.120), renderer: NVIDIA GeForce RTX 2080 Ti/PCIe/SSE2
+W0000 00:00:1748356640.598305  263031 inference_feedback_manager.cc:114] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+W0000 00:00:1748356640.656229  263054 inference_feedback_manager.cc:114] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+normal (최대 5개):  60%|██████    | 3/5 [00:38<00:26, 13.12s/it]I0000 00:00:1748356654.870951  262260 gl_context_egl.cc:85] Successfully initialized EGL. Major : 1 Minor: 5
+I0000 00:00:1748356654.904273  263173 gl_context.cc:369] GL version: 3.2 (OpenGL ES 3.2 NVIDIA 550.120), renderer: NVIDIA GeForce RTX 2080 Ti/PCIe/SSE2
+W0000 00:00:1748356655.001994  263125 inference_feedback_manager.cc:114] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+W0000 00:00:1748356655.059546  263148 inference_feedback_manager.cc:114] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+normal (최대 5개):  80%|████████  | 4/5 [00:51<00:13, 13.37s/it]I0000 00:00:1748356668.618550  262260 gl_context_egl.cc:85] Successfully initialized EGL. Major : 1 Minor: 5
+I0000 00:00:1748356668.652435  263238 gl_context.cc:369] GL version: 3.2 (OpenGL ES 3.2 NVIDIA 550.120), renderer: NVIDIA GeForce RTX 2080 Ti/PCIe/SSE2
+W0000 00:00:1748356668.745160  263191 inference_feedback_manager.cc:114] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+W0000 00:00:1748356668.802831  263212 inference_feedback_manager.cc:114] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+normal (최대 5개): 100%|██████████| 5/5 [01:01<00:00, 12.03s/it]normal (최대 5개): 100%|██████████| 5/5 [01:01<00:00, 12.28s/it]
+fighting (최대 5개):   0%|          | 0/5 [00:00<?, ?it/s]I0000 00:00:1748356678.283974  262260 gl_context_egl.cc:85] Successfully initialized EGL. Major : 1 Minor: 5
+I0000 00:00:1748356678.318415  263304 gl_context.cc:369] GL version: 3.2 (OpenGL ES 3.2 NVIDIA 550.120), renderer: NVIDIA GeForce RTX 2080 Ti/PCIe/SSE2
+W0000 00:00:1748356678.418680  263257 inference_feedback_manager.cc:114] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+W0000 00:00:1748356678.475478  263279 inference_feedback_manager.cc:114] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+fighting (최대 5개):  20%|██        | 1/5 [00:10<00:40, 10.21s/it]I0000 00:00:1748356688.482772  262260 gl_context_egl.cc:85] Successfully initialized EGL. Major : 1 Minor: 5
+I0000 00:00:1748356688.516827  263369 gl_context.cc:369] GL version: 3.2 (OpenGL ES 3.2 NVIDIA 550.120), renderer: NVIDIA GeForce RTX 2080 Ti/PCIe/SSE2
+W0000 00:00:1748356688.619219  263323 inference_feedback_manager.cc:114] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+W0000 00:00:1748356688.676193  263344 inference_feedback_manager.cc:114] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+fighting (최대 5개):  40%|████      | 2/5 [00:19<00:29,  9.82s/it]I0000 00:00:1748356698.037165  262260 gl_context_egl.cc:85] Successfully initialized EGL. Major : 1 Minor: 5
+I0000 00:00:1748356698.074728  263434 gl_context.cc:369] GL version: 3.2 (OpenGL ES 3.2 NVIDIA 550.120), renderer: NVIDIA GeForce RTX 2080 Ti/PCIe/SSE2
+W0000 00:00:1748356698.171119  263387 inference_feedback_manager.cc:114] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+W0000 00:00:1748356698.229468  263410 inference_feedback_manager.cc:114] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+fighting (최대 5개):  60%|██████    | 3/5 [00:32<00:22, 11.32s/it]I0000 00:00:1748356711.135941  262260 gl_context_egl.cc:85] Successfully initialized EGL. Major : 1 Minor: 5
+I0000 00:00:1748356711.171311  263499 gl_context.cc:369] GL version: 3.2 (OpenGL ES 3.2 NVIDIA 550.120), renderer: NVIDIA GeForce RTX 2080 Ti/PCIe/SSE2
+W0000 00:00:1748356711.263637  263458 inference_feedback_manager.cc:114] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+W0000 00:00:1748356711.319274  263474 inference_feedback_manager.cc:114] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+fighting (최대 5개):  80%|████████  | 4/5 [00:44<00:11, 11.58s/it]I0000 00:00:1748356723.126702  262260 gl_context_egl.cc:85] Successfully initialized EGL. Major : 1 Minor: 5
+I0000 00:00:1748356723.160653  263564 gl_context.cc:369] GL version: 3.2 (OpenGL ES 3.2 NVIDIA 550.120), renderer: NVIDIA GeForce RTX 2080 Ti/PCIe/SSE2
+W0000 00:00:1748356723.252360  263517 inference_feedback_manager.cc:114] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+W0000 00:00:1748356723.308429  263540 inference_feedback_manager.cc:114] Feedback manager requires a model with a single signature inference. Disabling support for feedback tensors.
+fighting (최대 5개): 100%|██████████| 5/5 [01:02<00:00, 13.69s/it]fighting (최대 5개): 100%|██████████| 5/5 [01:02<00:00, 12.45s/it]
+총 샘플 개수: 1829
+특징 벡터 차원: 132
+Train set 성능:
+              precision    recall  f1-score   support
+
+    fighting       1.00      1.00      1.00       382
+      normal       1.00      1.00      1.00       572
+   vandalism       1.00      1.00      1.00       509
+
+    accuracy                           1.00      1463
+   macro avg       1.00      1.00      1.00      1463
+weighted avg       1.00      1.00      1.00      1463
+
+Validation set 성능:
+              precision    recall  f1-score   support
+
+    fighting       1.00      1.00      1.00        96
+      normal       0.99      0.99      0.99       143
+   vandalism       0.99      0.99      0.99       127
+
+    accuracy                           0.99       366
+   macro avg       1.00      1.00      1.00       366
+weighted avg       0.99      0.99      0.99       366
+
+모델과 스케일러가 output 폴더에 저장되었습니다.
