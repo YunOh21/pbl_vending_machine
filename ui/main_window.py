@@ -20,8 +20,7 @@ class VendingMachine(QWidget):
         self.setWindowTitle("자판기")
 
         product_list = controller.get_all()
-        print(product_list[0][1])
-
+        
         products = QGridLayout(self.products)
         for i in range(3):
             for j in range(4):
@@ -34,7 +33,7 @@ class VendingMachine(QWidget):
                     "background-color: #eee; border: 1px solid #ccc;"
                 )
                 try:
-                    btn = QPushButton(product_list[i * 4 + j][1])
+                    btn = QPushButton(product_list[i * 4 + j].name)
                 except:
                     btn = QPushButton(f"상품 {i * 4 + j + 1}")
                 btn.setDisabled(True)

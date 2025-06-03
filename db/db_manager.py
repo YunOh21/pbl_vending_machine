@@ -1,18 +1,11 @@
-import sqlite3
-
+from .db_object import *
 
 def get_all():
-    conn = sqlite3.connect("vending_machine.db")
-    cur = conn.cursor()
+    engine = create_engine('sqlite:///db/vending_machine.db')
+    Session = sessionmaker(bind=engine)
+    session = Session()
 
-    product_list = []
+    product_list = session.query(Product).all()
 
-    cur.execute("SELECT * FROM Product")
-    rows = cur.fetchall()
-    for row in rows:
-        product_list.append(row)
-
-    conn.commit()
-    conn.close()
-
+    session.close()
     return product_list

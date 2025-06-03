@@ -18,6 +18,12 @@ PBL_VENDING_MACHINE/
 └── requirements.txt
 ```
 
+## 개발 환경
+|   |   |
+|---|---|
+|개발환경|![Ubuntu](https://img.shields.io/badge/Ubuntu-E95420?style=for-the-badge&logo=Ubuntu&logoColor=white) ![Visual Studio Code](https://img.shields.io/badge/Visual%20Studio%20Code-007ACC?style=for-the-badge&logo=Visual%20Studio%20Code&logoColor=white) ![Git](https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=Git&logoColor=white) ![Github](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=GitHub&logoColor=white)|
+|기술|![Python](https://img.shields.io/badge/python-3776AB?style=for-the-badge&logo=python&logoColor=white) ![SQLite](https://img.shields.io/badge/sqlite-003B57?style=for-the-badge&logo=sqlite&logoColor=white) ![SQLAlchemy](https://img.shields.io/badge/SQLAlchemy-D71F00?style=for-the-badge&logo=SQLAlchemy&logoColor=white) ![Qt](https://img.shields.io/badge/Qt-41CD52?style=for-the-badge&logo=Qt&logoColor=white) ![Flask](https://img.shields.io/badge/flask-000000?style=for-the-badge&logo=flask&logoColor=white) ![ScikitLearn](https://img.shields.io/badge/scikitlearn-F7931E?style=for-the-badge&logo=scikitlearn&logoColor=white) ![MediaPipe](https://img.shields.io/badge/mediapipe-0097A7?style=for-the-badge&logo=mediapipe&logoColor=white)|
+
 ## 설계
 - 시나리오: 고객이 음료 구매
 <p align="center">
@@ -30,32 +36,31 @@ PBL_VENDING_MACHINE/
 - 데이터베이스 구조
 <img src="design/ERD.png">
 
-## 개발 환경
-|   |   |
-|---|---|
-|개발환경|![Ubuntu](https://img.shields.io/badge/Ubuntu-E95420?style=for-the-badge&logo=Ubuntu&logoColor=white) ![Visual Studio Code](https://img.shields.io/badge/Visual%20Studio%20Code-007ACC?style=for-the-badge&logo=Visual%20Studio%20Code&logoColor=white) ![Git](https://img.shields.io/badge/Git-F05032?style=for-the-badge&logo=Git&logoColor=white) ![Github](https://img.shields.io/badge/GitHub-181717?style=for-the-badge&logo=GitHub&logoColor=white)|
-|기술|![Python](https://img.shields.io/badge/python-3776AB?style=for-the-badge&logo=python&logoColor=white) ![SQLite+](https://img.shields.io/badge/sqlite-003B57?style=for-the-badge&logo=sqlite&logoColor=white) ![Qt](https://img.shields.io/badge/Qt-41CD52?style=for-the-badge&logo=Qt&logoColor=white) ![Flask](https://img.shields.io/badge/flask-000000?style=for-the-badge&logo=flask&logoColor=white) ![ScikitLearn](https://img.shields.io/badge/scikitlearn-F7931E?style=for-the-badge&logo=scikitlearn&logoColor=white) ![MediaPipe](https://img.shields.io/badge/mediapipe-0097A7?style=for-the-badge&logo=mediapipe&logoColor=white)|
-
-
 ## 시연 영상
 
 ## 실행 방법
+- 모든 명령어는 프로젝트 루트 디렉토리에서 실행해주세요.
 ### 0. 외부 라이브러리 설치
 ```
 pip install -r requirements.txt
 ```
 
-### 1. 자판기
+### 1. DB 생성 및 데이터 입력
+```
+python -m db.db_start
+```
+
+### 2. 자판기 (PyQt)
 - 자판기이므로 IoT로 구현가능하도록 PyQt로 UI를 제작했습니다.
-- 프로젝트 루트 디렉토리에서 아래 명령어로 실행해주세요.
 ```
 python -m ui.main_window
 ```
 
-### 2. 자판기 관리자 (웹페이지)
-- 로컬호스트에서 실행할 수 있으며, 관리자가 PC에서 웹에 접속하는 화면을 염두에 두고 Flask를 사용하여 개발했습니다.
+### 3. 자판기 관리자 (웹페이지)
+- 로컬호스트에서 실행됩니다.
+- 관리자가 PC에서 접속하는 페이지로 가정하고 Flask를 사용하여 개발했습니다.
 ```
-python3 admin/app.py
+python -m admin.app
 ```
 
 ## 부가 기능: 이상행동 감지

@@ -1,5 +1,6 @@
 PyQt5==5.15.11
 Flask==3.1.1
+sqlalchemy==2.0.41
 opencv-python==4.11.0.86
 mediapipe==0.10.21
 scikit-learn==1.6.1
