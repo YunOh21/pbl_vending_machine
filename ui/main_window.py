@@ -1,7 +1,7 @@
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5 import uic
-import sys
+import sys, os
 
 from core import controller
 
@@ -14,19 +14,18 @@ class VendingMachine(QWidget):
         is_change = None
         is_card = None
         is_drink_out = None
-        is_cash = "Y"
+        is_cash = None
 
         uic.loadUi("ui/vending_machine.ui", self)
         self.setWindowTitle("자판기")
 
         product_list = controller.get_all()
-        
+
         products = QGridLayout(self.products)
         for i in range(3):
             for j in range(4):
                 vbox = QVBoxLayout()
                 img_label = QLabel()
-                img_label.setPixmap(QPixmap("no_image.png"))
                 img_label.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
                 img_label.setScaledContents(True)
                 img_label.setStyleSheet(
@@ -34,6 +33,10 @@ class VendingMachine(QWidget):
                 )
                 try:
                     btn = QPushButton(product_list[i * 4 + j].name)
+                    img_path = product_list[i * 4 + j].image_path
+                    if not os.path.exists(img_path):
+                        img_path = "assets/no_image.gif"
+                    img_label.setPixmap(QPixmap(img_path))
                 except:
                     btn = QPushButton(f"상품 {i * 4 + j + 1}")
                 btn.setDisabled(True)
@@ -59,8 +62,13 @@ class VendingMachine(QWidget):
 
         # 상품 버튼 활성화
         if is_card or is_cash:
+            self.help_label.hide()
             for btn in self.products.findChildren(QPushButton):
                 btn.setEnabled(True)
+        else:
+            self.help_label.show()
+            for btn in self.products.findChildren(QPushButton):
+                btn.setEnabled(False)
 
         # 영수증 버튼
         if is_receipt is None:

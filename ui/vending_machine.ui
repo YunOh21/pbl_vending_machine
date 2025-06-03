@@ -205,6 +205,22 @@
    <property name="title">
     <string>상품선택</string>
    </property>
+   <widget class="QLabel" name="help_label">
+    <property name="geometry">
+     <rect>
+      <x>110</x>
+      <y>0</y>
+      <width>301</width>
+      <height>20</height>
+     </rect>
+    </property>
+    <property name="text">
+     <string>지폐나 카드 투입 후 주문 가능합니다.</string>
+    </property>
+    <property name="alignment">
+     <set>Qt::AlignCenter</set>
+    </property>
+   </widget>
   </widget>
   <widget class="QGroupBox" name="recommend">
    <property name="geometry">
