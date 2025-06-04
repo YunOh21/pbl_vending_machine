@@ -1,4 +1,4 @@
-from .db_object import *
+from .dao import *
 
 
 def main():

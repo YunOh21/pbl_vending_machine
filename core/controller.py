@@ -1,4 +1,5 @@
 from db import db_manager
+from common.dto import *
 
 
 def get_all_products():
@@ -9,8 +10,8 @@ def get_one_product(product_id):
     return db_manager.get_one_product(product_id)
 
 
-def place_order(product_id, payment_type):
-    return db_manager.place_order(product_id, payment_type)
+def place_order(order_dto: OrderData):
+    return db_manager.place_order(order_dto)
 
 
 def get_ordered_product(order_id):

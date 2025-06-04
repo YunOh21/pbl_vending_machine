@@ -1,4 +1,6 @@
-from .db_object import *
+from .dao import *
+from common.dto import *
+from datetime import datetime
 
 engine = create_engine("sqlite:///db/vending_machine.db")
 Session = sessionmaker(bind=engine)
@@ -19,19 +21,26 @@ def get_one_product(product_id):
         return product
 
 
-def place_order(product_id, payment_type):
+def place_order(order_dto: OrderData):
     with Session() as session:
-        product = session.query(Product).filter_by(id=product_id).first()
+        product = session.query(Product).filter_by(id=order_dto.product_id).first()
         if not product:
             raise Exception("상품이 존재하지 않습니다.")
         if product.stock <= 0:
             raise Exception("재고가 부족합니다.")
 
-        order = Order(product_id=product_id, payment_type=payment_type)
-        session.add(order)
+        order_dao = Order(
+            product_id=order_dto.product_id,
+            payment_type=order_dto.payment_type,
+            ordered_at=datetime.now(),
+            card_info=order_dto.card_info,
+            cash_amount=order_dto.input_cash_amount,
+            cash_change=order_dto.change,
+        )
+        session.add(order_dao)
         product.stock -= 1
         session.commit()
-        return order.id
+        return order_dao.id
 
 
 def get_ordered_product(order_id):

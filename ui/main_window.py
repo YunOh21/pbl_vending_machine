@@ -5,6 +5,7 @@ from PyQt5 import uic
 import sys, os
 
 from core import controller
+from common.dto import *
 
 
 class VendingMachine(QWidget):
@@ -161,9 +162,17 @@ class VendingMachine(QWidget):
     def place_order(self):
         btn = self.sender()
         product_id = btn.property("id")
-        self.order_id = controller.place_order(product_id, self.payment_type)
+        product_price = btn.property("price")
+        order_dto = OrderData(
+            product_id=product_id,
+            payment_type=self.payment_type,
+            input_cash_amount=self.cash_amount,
+            card_info=self.card_info,
+            change=self.cash_amount - product_price,
+        )
+        self.order_id = controller.place_order(order_dto)
         if self.order_id:
-            self.cash_amount -= btn.property("price")
+            self.cash_amount -= product_price
             self.set_cash_btn()
             self.give_drink()
 
@@ -203,6 +212,7 @@ class VendingMachine(QWidget):
         self.payment_type = "CASH"
         self.cash_amount = 0
         self.order_id = None
+        self.card_info = None
 
         self.set_order_btn()
         self.set_receipt_btn()
@@ -320,6 +330,9 @@ class VendingMachine(QWidget):
             # "받았습니다" 버튼 표시
             self.receive_drink_btn.show()
         else:
+            QMessageBox.critical(
+                self, "오류", "문제가 발생했습니다. 관리자에게 문의하세요."
+            )
             self.receive_drink_img.hide()
             self.receive_drink_btn.hide()
 
