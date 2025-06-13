@@ -32,7 +32,7 @@ def place_order(order_dto: OrderData):
         order_dao = Order(
             product_id=order_dto.product_id,
             payment_type=order_dto.payment_type,
-            ordered_at=datetime.now(),
+            order_at=datetime.now(),
             card_info=order_dto.card_info,
             cash_amount=order_dto.input_cash_amount,
             cash_change=order_dto.change,

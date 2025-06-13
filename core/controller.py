@@ -11,6 +11,7 @@ def get_one_product(product_id):
 
 
 def place_order(order_dto: OrderData):
+    print(f"controller:place_order, order_dto: {order_dto}")
     return db_manager.place_order(order_dto)
 
 

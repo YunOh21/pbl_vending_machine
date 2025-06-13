@@ -95,9 +95,9 @@
     <property name="geometry">
      <rect>
       <x>10</x>
-      <y>60</y>
+      <y>40</y>
       <width>88</width>
-      <height>61</height>
+      <height>101</height>
      </rect>
     </property>
     <property name="font">
@@ -105,41 +105,6 @@
       <weight>50</weight>
       <bold>false</bold>
      </font>
-    </property>
-    <property name="text">
-     <string>투입</string>
-    </property>
-   </widget>
-  </widget>
-  <widget class="QGroupBox" name="receipt_box">
-   <property name="geometry">
-    <rect>
-     <x>890</x>
-     <y>250</y>
-     <width>111</width>
-     <height>81</height>
-    </rect>
-   </property>
-   <property name="font">
-    <font>
-     <weight>75</weight>
-     <bold>true</bold>
-    </font>
-   </property>
-   <property name="title">
-    <string>영수증 나오는 곳</string>
-   </property>
-   <property name="alignment">
-    <set>Qt::AlignCenter</set>
-   </property>
-   <widget class="QPushButton" name="receipt_btn">
-    <property name="geometry">
-     <rect>
-      <x>10</x>
-      <y>30</y>
-      <width>88</width>
-      <height>41</height>
-     </rect>
     </property>
     <property name="text">
      <string/>
@@ -208,14 +173,14 @@
    <widget class="QLabel" name="help_label">
     <property name="geometry">
      <rect>
-      <x>180</x>
+      <x>120</x>
       <y>0</y>
-      <width>301</width>
+      <width>441</width>
       <height>20</height>
      </rect>
     </property>
     <property name="text">
-     <string>지폐나 카드 투입 후 주문 가능합니다.</string>
+     <string>지폐나 카드 투입 후 주문 가능합니다. *재고 없으면 주문 불가</string>
     </property>
     <property name="alignment">
      <set>Qt::AlignCenter</set>

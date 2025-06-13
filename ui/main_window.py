@@ -21,39 +21,59 @@ class VendingMachine(QWidget):
 
     def show_product_list(self):
         self.product_list = controller.get_all_products()
+        self.is_soldout = all(product.stock == 0 for product in self.product_list)
 
         products = QGridLayout(self.products)
         for i in range(3):
             for j in range(4):
                 vbox = QVBoxLayout()
+
                 img_label = QLabel()
                 img_label.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
                 img_label.setScaledContents(True)
                 img_label.setStyleSheet(
                     "background-color: #eee; border: 1px solid #ccc;"
                 )
+
+                # stock_label을 img_label의 자식으로 생성
+                stock_label = QLabel(img_label)
+                stock_label.setAlignment(Qt.AlignBottom | Qt.AlignRight)
+                stock_label.setStyleSheet(
+                    "color: blue; padding: 1px; font-size: 10px; background: transparent;"
+                )
+                stock_label.setAttribute(Qt.WA_TransparentForMouseEvents)
+
                 price_label = QLabel()
                 price_label.setAlignment(Qt.AlignCenter)
-                stock_label = QLabel()
-                stock_label.setAlignment(Qt.AlignRight)
+
                 try:
                     product = self.product_list[i * 4 + j]
                     name = product.name
                     id = product.id
                     price = product.price
+                    stock = product.stock
                     img_path = product.image_path
 
                     btn = QPushButton(name)
                     btn.setProperty("id", id)
                     btn.setProperty("price", price)
+                    btn.setProperty("stock", stock)
 
                     if not os.path.exists(img_path):
                         img_path = "assets/no_image.gif"
                     img_label.setPixmap(QPixmap(img_path))
                     price_label.setText(f"₩{price:,}")
+                    stock_label.setText(f"재고: {stock}")
+
+                    if stock == 0:
+                        stock_label.setStyleSheet(
+                            "color: gray; padding: 1px; font-size: 10px; background: transparent;"
+                        )
                 except:
                     btn = QPushButton(f"상품 {i * 4 + j + 1}")
+                    stock_label.setText("")
                 btn.setDisabled(True)
+
                 vbox.addWidget(img_label)
                 vbox.addWidget(price_label)
                 vbox.addWidget(btn)
@@ -62,6 +82,7 @@ class VendingMachine(QWidget):
                 container.setLayout(vbox)
                 products.addWidget(container, i, j)
 
+    def create_all(self):
         recommend = QGridLayout(self.recommend)
         for text in ["졸려요", "다이어트", "탄산", "무카페인", "아무거나"]:
             btn = QPushButton(text)
@@ -69,7 +90,6 @@ class VendingMachine(QWidget):
             btn.setDisabled(True)
             recommend.addWidget(btn)
 
-    def create_all(self):
         cash = QGridLayout(self.cash_box)
         for text in ["1000", "5000", "10000"]:
             btn = QPushButton(text)
@@ -152,29 +172,61 @@ class VendingMachine(QWidget):
     def on_drink_received(self):
         self.receive_drink_img.hide()
         self.receive_drink_btn.hide()
-        self.cash_label.hide()
-        self.cash_display.hide()
-        self.return_cash_btn.hide()
-        self.change_box.show()
-        self.change_btn.setText(f"₩{self.cash_amount:,} 받기")
-        self.change_btn.show()
+
+        if self.payment_type == "CASH":
+            self.cash_label.hide()
+            self.cash_display.hide()
+            self.return_cash_btn.hide()
+            self.change_box.show()
+            self.change_btn.setText(f"₩{self.cash_amount:,} 받기")
+            self.change_btn.show()
+        else:
+            self.is_processing = False
+            # 카드 결제 시 영수증 수령 여부 팝업
+            reply = QMessageBox.question(
+                self,
+                "영수증 발급",
+                "영수증을 받으시겠습니까?",
+                QMessageBox.Yes | QMessageBox.No,
+                QMessageBox.Yes,
+            )
+            if reply == QMessageBox.Yes:
+                QMessageBox.information(
+                    self,
+                    "영수증",
+                    "영수증이 발급되었습니다.\n카드와 영수증을 가져가세요.",
+                )
+                self.is_receipt = "printed"
+            else:
+                QMessageBox.information(self, "감사합니다.", "카드를 가져가세요.")
+                self.is_receipt = "collected"
+
+            self.set_card_btn()
 
     def place_order(self):
         btn = self.sender()
         product_id = btn.property("id")
         product_price = btn.property("price")
+        change = None
+        if self.payment_type == "CASH":
+            change = self.cash_amount - product_price
+
         order_dto = OrderData(
             product_id=product_id,
             payment_type=self.payment_type,
             input_cash_amount=self.cash_amount,
             card_info=self.card_info,
-            change=self.cash_amount - product_price,
+            change=change,
         )
+
         self.order_id = controller.place_order(order_dto)
-        if self.order_id:
+        if self.order_id and self.payment_type == "CASH":
             self.cash_amount -= product_price
             self.set_cash_btn()
-            self.give_drink()
+        else:
+            self.is_processing = True
+            self.set_card_btn()
+        self.give_drink()
 
     def return_cash(self):
         self.cash_amount = 0
@@ -183,7 +235,16 @@ class VendingMachine(QWidget):
         self.set_cash_btn()
         self.set_order_btn()
 
+    def info_soldout(self):
+        QMessageBox.information(
+            self,
+            "재고 소진",
+            "주문할 수 있는 상품이 없습니다.\n결제수단을 가져가세요.",
+        )
+
     def set_cash_status(self):
+        if self.is_soldout:
+            self.info_soldout()
         btn = self.sender()
         self.cash_amount += btn.property("amount")
         self.is_processing = True
@@ -192,21 +253,23 @@ class VendingMachine(QWidget):
         self.set_order_btn()
 
     def set_card_status(self):
-        if self.is_card:
-            self.is_card = False
-            self.payment_type = "CASH"
+        if self.is_soldout and self.payment_type == "CASH":
+            self.info_soldout()
+
+        if self.is_receipt:
+            self.set_init_status()
         else:
-            self.is_card = True
-            self.payment_type = "CARD"
-        self.set_card_btn()
-        self.set_cash_btn()
-        self.set_order_btn()
+            if self.payment_type == "CARD":
+                self.payment_type = "CASH"
+            else:
+                self.payment_type = "CARD"
+            self.set_card_btn()
+            self.set_cash_btn()
+            self.set_order_btn()
 
     def set_init_status(self):
         self.is_receipt = False
         self.is_change = False
-        self.is_card = False
-        self.is_cash = False
         self.is_processing = False
 
         self.payment_type = "CASH"
@@ -215,33 +278,34 @@ class VendingMachine(QWidget):
         self.card_info = None
 
         self.set_order_btn()
-        self.set_receipt_btn()
         self.set_card_btn()
         self.set_cash_btn()
         self.set_change_btn()
         self.set_receive_drink_btn()
 
     def set_card_btn(self):
-        if self.is_card:
+        self.card_btn.setDisabled(False)
+
+        if self.payment_type == "CARD":
             if self.is_receipt == "collected":
-                self.card_btn.setText("카드\n찾아가세요")
+                self.card_btn.setText("카드 꺼내기")
                 self.card_btn.setStyleSheet("color: red;")
-                self.card_btn.setDisabled(False)
+            elif self.is_receipt == "printed":
+                self.card_btn.setText("카드와\n영수증\n받기")
+                self.card_btn.setStyleSheet("color: red;")
             else:
-                self.card_btn.setText("카드가\n있어요")
+                self.card_btn.setText("주문 안 하고\n카드 꺼내기")
                 self.card_btn.setStyleSheet("")
-                self.card_btn.setDisabled(False)
         else:
             self.card_btn.setText("카드를\n넣으세요")
             self.card_btn.setStyleSheet("")
-            self.card_btn.setDisabled(False)
 
         if self.is_processing:
             self.card_btn.setText("결제중...")
             self.card_btn.setDisabled(True)
 
     def set_cash_btn(self):
-        if self.is_card:
+        if self.payment_type == "CARD":
             for btn in self.cash_box.findChildren(QPushButton):
                 btn.setEnabled(False)
         else:
@@ -264,38 +328,31 @@ class VendingMachine(QWidget):
                 btn.setEnabled(False)
 
     def set_order_btn(self):
-        if self.is_card or self.cash_amount != 0:
-            self.help_label.hide()
-            for btn in self.products.findChildren(QPushButton):
-                if (self.is_card) or (btn.property("price") <= self.cash_amount):
-                    btn.setEnabled(True)
-                elif btn.property("price") > self.cash_amount:
-                    btn.setEnabled(False)
-            if (self.is_card) or self.cash_amount >= 2000:
+        if not self.is_soldout:
+            if self.payment_type == "CARD" or self.cash_amount != 0:
+                self.help_label.hide()
                 for btn in self.recommend.findChildren(QPushButton):
                     btn.setEnabled(True)
-        else:
-            self.help_label.show()
-            for btn in self.products.findChildren(QPushButton):
-                btn.setEnabled(False)
-            for btn in self.recommend.findChildren(QPushButton):
-                btn.setEnabled(False)
-
-    def set_receipt_btn(self):
-        if not self.is_receipt:
-            self.receipt_box.hide()
-            self.receipt_btn.hide()
-        elif self.order_id:
-            self.receipt_btn.setText("받기")
-            self.receipt_btn.show()
-            self.receipt_box.show()
-        elif self.is_receipt == "printed":
-            self.receipt_btn.setText("확인")
-            self.receipt_btn.show()
-            self.receipt_box.show()
-        elif self.is_receipt == "collected":
-            self.receipt_box.hide()
-            self.receipt_btn.hide()
+                for btn in self.products.findChildren(QPushButton):
+                    if btn.property("stock") > 0:
+                        btn.setEnabled(True)
+                    elif btn.property("price") > self.cash_amount:
+                        btn.setEnabled(False)
+            elif self.cash_amount != 0:
+                self.help_label.hide()
+                for btn in self.recommend.findChildren(QPushButton):
+                    btn.setEnabled(True)
+                for btn in self.products.findChildren(QPushButton):
+                    if btn.property("price") <= self.cash_amount:
+                        btn.setEnabled(True)
+                    else:
+                        btn.setEnabled(False)
+            else:
+                self.help_label.show()
+                for btn in self.products.findChildren(QPushButton):
+                    btn.setEnabled(False)
+                for btn in self.recommend.findChildren(QPushButton):
+                    btn.setEnabled(False)
 
     def set_change_btn(self):
         if self.is_change:

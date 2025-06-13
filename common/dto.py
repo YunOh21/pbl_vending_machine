@@ -1,9 +1,12 @@
 from dataclasses import dataclass
+from datetime import datetime
+from typing import Optional
+
 
 @dataclass
 class OrderData:
     product_id: int
     payment_type: str
-    input_cash_amount: int  # 카드인 경우 null
-    card_info: str          # 카드사 + 카드번호 마지막 4자리, 현금인 경우 null
-    change: int             # 카드인 경우 null
+    input_cash_amount: Optional[int]  # 카드인 경우 null
+    card_info: Optional[str]  # 카드사 + 카드번호 마지막 4자리, 현금인 경우 null
+    change: Optional[int]  # 카드인 경우 null
