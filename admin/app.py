@@ -1,4 +1,5 @@
 from flask import Flask, render_template
+from . import controller
 
 app = Flask(__name__)
 
@@ -15,12 +16,18 @@ def inventory():
 
 @app.route("/admin/orders")
 def orders():
-    return render_template("orders.html")
+    order_list = controller.get_all_orders()
+    return render_template("orders.html", orders=order_list)
 
 
 @app.route("/admin/edit")
 def edit():
     return render_template("edit.html")
+
+
+@app.route("/admin/test")
+def test():
+    return render_template("test.html")
 
 
 if __name__ == "__main__":

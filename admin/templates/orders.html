@@ -1,2 +1,41 @@
-<h1>주문 이력</h1>
-<p>여기서 주문 이력 및 영수증 발급내역을 확인할 수 있습니다.</p>
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>주문 목록</title>
+    <style>
+        table { border-collapse: collapse; width: 100%; }
+        th, td { border: 1px solid #ccc; padding: 8px; text-align: center; }
+        th { background: #f0f0f0; }
+        #searchBox { margin-bottom: 10px; width: 300px; height: 28px; font-size: 16px; }
+    </style>
+</head>
+<body>
+    <input type="text" id="searchBox" placeholder="검색..." oninput="
+    var input = this.value.toLowerCase();
+    var trs = document.querySelectorAll('#orderTable tbody tr');
+    trs.forEach(function(tr){
+        tr.style.display = tr.textContent.toLowerCase().includes(input) ? '' : 'none';
+    });
+    ">
+
+    <table id="orderTable">
+        <thead>
+            <tr>
+                <th>주문번호</th>
+                <th>상품명</th>
+                <th>영수증</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for order in orders %}
+            <tr>
+                <td>{{ order.id }}</td>
+                <td>{{ order.product_name }}</td>
+                <td>{{ order.has_receipt }}</td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+</body>
+</html>
