@@ -191,6 +191,7 @@ class VendingMachine(QWidget):
                 QMessageBox.Yes,
             )
             if reply == QMessageBox.Yes:
+                controller.add_receipt(self.order_id)
                 QMessageBox.information(
                     self,
                     "영수증",

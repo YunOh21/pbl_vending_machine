@@ -21,7 +21,7 @@ def get_one_product(product_id):
         return product
 
 
-def place_order(order_dto: OrderData):
+def insert_order(order_dto: OrderData):
     with Session() as session:
         product = session.query(Product).filter_by(id=order_dto.product_id).first()
         if not product:
@@ -50,3 +50,11 @@ def get_ordered_product(order_id):
             raise Exception("주문이 존재하지 않습니다.")
 
         return order.product_id
+
+
+def insert_receipt(order_id):
+    with Session() as session:
+        receipt_dao = Receipt(order_id=order_id)
+        session.add(receipt_dao)
+        session.commit()
+        return receipt_dao.id
