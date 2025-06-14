@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+    <meta charset="UTF-8">
+    <title>{% block title %}관리자 페이지{% endblock %}</title>
+    <style>
+        body {
+            margin: 0;
+            font-family: Arial, sans-serif;
+            display: flex;
+            height: 100vh;
+        }
+        nav {
+            width: 200px;
+            background-color: #f5f5f5;
+            padding: 20px;
+            box-shadow: 2px 0 5px rgba(0,0,0,0.1);
+        }
+        nav h2 {
+            font-size: 20px;
+            margin-bottom: 10px;
+        }
+        nav a {
+            display: block;
+            margin: 10px 0;
+            text-decoration: none;
+            color: #333;
+            font-weight: normal;
+        }
+        nav a.active {
+            font-weight: bold;
+        }
+        main {
+            flex: 1;
+            padding: 30px;
+            overflow: auto;
+        }
+        table { border-collapse: collapse; width: 100%; }
+        th, td { border: 1px solid #ccc; padding: 8px; text-align: center; }
+        th { background: #f0f0f0; }
+        #searchBox { margin-bottom: 10px; width: 300px; height: 28px; font-size: 16px; }
+        th.img-col, td.img-col {
+            width: 200px;
+            min-width: 200px;
+            max-width: 200px;
+            text-align: center;
+            padding: 2px;
+        }
+        td.img-col img {
+            width: 200px;
+            height: 200px;
+            object-fit: contain;
+            display: block;
+            margin: 0 auto;
+        }
+        tbody tr:hover {
+            background-color: #e3f2fd; /* 연한 파란색, 원하는 색상으로 바꿔도 됩니다 */
+            cursor: pointer;
+        }
+        .edit-btn {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            background: linear-gradient(90deg, #42a5f5 0%, #1976d2 100%);
+            color: #fff;
+            padding: 6px 16px;
+            border: none;
+            border-radius: 20px;
+            font-size: 15px;
+            font-weight: 500;
+            box-shadow: 0 2px 6px rgba(25, 118, 210, 0.15);
+            cursor: pointer;
+            transition: background 0.2s, box-shadow 0.2s, transform 0.1s;
+            text-decoration: none;
+            outline: none;
+        }
+        .edit-btn:hover, .edit-btn:focus {
+            background: linear-gradient(90deg, #1976d2 0%, #42a5f5 100%);
+            box-shadow: 0 4px 12px rgba(25, 118, 210, 0.22);
+            transform: translateY(-2px) scale(1.04);
+            color: #fff;
+            text-decoration: none;
+        }
+        .edit-btn i {
+            font-size: 16px;
+            margin-right: 2px;
+        }
+        .modal {
+            position: fixed;
+            z-index: 1000;
+            left: 0; top: 0; width: 100vw; height: 100vh;
+            background: rgba(0,0,0,0.3);
+            display: flex; align-items: center; justify-content: center;
+        }
+        .modal-content {
+            background: #fff;
+            padding: 32px 28px 24px 28px;
+            border-radius: 14px;
+            box-shadow: 0 8px 32px rgba(25, 118, 210, 0.12);
+            min-width: 320px;
+            max-width: 90vw;
+            position: relative;
+        }
+        .close {
+            position: absolute; right: 18px; top: 14px;
+            font-size: 28px; font-weight: bold; color: #888;
+            cursor: pointer;
+            transition: color 0.2s;
+        }
+        .close:hover { color: #1976d2; }
+        .modal-content label {
+            display: inline-block; min-width: 70px; margin-bottom: 8px;
+        }
+        .modal-content input[type="text"], .modal-content input[type="number"] {
+            width: 70%; padding: 6px 10px; margin-bottom: 14px;
+            border: 1px solid #ccc; border-radius: 5px;
+        }
+
+
+    </style>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+</head>
+<body>
+    <nav>
+        <a href="/" class="{% if active_page == 'home' %}active{% endif %}">Home</a>
+        <a href="/admin/inventory" class="{% if active_page == 'inventory' %}active{% endif %}">상품현황</a>
+        <a href="/admin/orders" class="{% if active_page == 'orders' %}active{% endif %}">주문이력</a>
+    </nav>
+    <main>
+        {% block content %}{% endblock %}
+    </main>
+</body>
+</html>

@@ -47,7 +47,7 @@ pip install -r requirements.txt
 
 ### 1. DB 생성 및 데이터 입력
 ```
-python -m db.db_start
+python -m db.db_starter
 ```
 
 ### 2. 자판기 (PyQt)

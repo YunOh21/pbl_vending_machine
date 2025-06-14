@@ -1,2 +1,90 @@
-<h1>재고 현황</h1>
-<p>여기서 상품별 재고를 확인할 수 있습니다.</p>
+{% extends "base.html" %}
+{% block title %}상품 현황{% endblock %}
+{% block content %}
+    <input type="text" id="searchBox" placeholder="검색..." oninput="search(this)">
+
+    <table id="productTable">
+        <thead>
+            <tr>
+                <th>상품번호</th>
+                <th>상품명</th>
+                <th>재고</th>
+                <th>가격</th>
+                <th>업체명</th>
+                <th>칼로리</th>
+                <th>카페인</th>
+                <th>탄산</th>
+                <th>당</th>
+                <th class="img-col">이미지</th>
+                <th>수정</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% for product in products %}
+            <tr>
+                <td>{{ product.id }}</td>
+                <td>{{ product.name }}</td>
+                <td>{{ product.stock }}</td>
+                <td>{{ product.price }}</td>
+                <td>{{ product.company_name }}</td>
+                <td>{{ product.kcal }}</td>
+                <td>{{ product.caffeine }}</td>
+                <td>{{ product.carbon_acid == 1 }}</td>
+                <td>{{ product.sugar }}</td>
+                <td class="img-col">
+                    <img src="{{ url_for('static', filename=product.image_path) }}" alt="{{ product.name }}">
+                </td>
+                <td>
+                    <a href="#" class="edit-btn" onclick="openEditModal('{{ product.id }}', '{{ product.name }}', '{{ product.price }}')">
+                        <i class="fa fa-pen"></i>
+                    </a>
+                </td>
+            </tr>
+            {% endfor %}
+        </tbody>
+    </table>
+    <!-- 수정 모달 -->
+    <div id="editModal" class="modal" style="display: none;">
+        <div class="modal-content">
+            <span class="close" onclick="closeModal()">&times;</span>
+            <h2>상품 수정</h2>
+            <form id="editForm" onsubmit="submitEdit(event)">
+                <input type="hidden" name="product_id" id="editProductId">
+                <div>
+                    <label>상품명:</label>
+                    <input type="text" name="product_name" id="editProductName" required>
+                </div>
+                <div>
+                    <label>가격:</label>
+                    <input type="number" name="price" id="editProductPrice" required>
+                </div>
+                <!-- 필요에 따라 다른 필드도 추가 -->
+                <button type="submit" class="edit-btn"><i class="fa fa-check"></i> 저장</button>
+            </form>
+        </div>
+    </div>
+    <script>
+        function search(inputElement) {
+            var input = inputElement.value.toLowerCase();
+            var trs = document.querySelectorAll('#productTable tbody tr');
+            trs.forEach(function(tr){
+                tr.style.display = tr.textContent.toLowerCase().includes(input) ? '' : 'none';
+            });
+        }
+        function openEditModal(id, name, price) {
+            document.getElementById('editProductId').value = id;
+            document.getElementById('editProductName').value = name;
+            document.getElementById('editProductPrice').value = price;
+            document.getElementById('editModal').style.display = 'flex';
+        }
+        function closeModal() {
+            document.getElementById('editModal').style.display = 'none';
+        }
+        function submitEdit(event) {
+            event.preventDefault();
+            // 여기에 실제 서버로 수정 요청을 보내는 코드를 작성하세요.
+            alert('수정 완료! (실제 저장 로직 필요)');
+            closeModal();
+        }
+    </script>
+{% endblock %}

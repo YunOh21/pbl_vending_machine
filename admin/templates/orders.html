@@ -1,29 +1,18 @@
-<!DOCTYPE html>
-<html lang="ko">
-<head>
-    <meta charset="UTF-8">
-    <title>주문 목록</title>
-    <style>
-        table { border-collapse: collapse; width: 100%; }
-        th, td { border: 1px solid #ccc; padding: 8px; text-align: center; }
-        th { background: #f0f0f0; }
-        #searchBox { margin-bottom: 10px; width: 300px; height: 28px; font-size: 16px; }
-    </style>
-</head>
-<body>
-    <input type="text" id="searchBox" placeholder="검색..." oninput="
-    var input = this.value.toLowerCase();
-    var trs = document.querySelectorAll('#orderTable tbody tr');
-    trs.forEach(function(tr){
-        tr.style.display = tr.textContent.toLowerCase().includes(input) ? '' : 'none';
-    });
-    ">
+{% extends "base.html" %}
+{% block title %}주문 목록{% endblock %}
+{% block content %}
+    <input type="text" id="searchBox" placeholder="검색..." oninput="search(this)">
 
     <table id="orderTable">
         <thead>
             <tr>
                 <th>주문번호</th>
                 <th>상품명</th>
+                <th>업체명</th>
+                <th>주문시각</th>
+                <th>결제수단</th>
+                <th>현금결제</th>
+                <th>거스름돈</th>
                 <th>영수증</th>
             </tr>
         </thead>
@@ -32,10 +21,23 @@
             <tr>
                 <td>{{ order.id }}</td>
                 <td>{{ order.product_name }}</td>
+                <td>{{ order.company_name }}</td>
+                <td>{{ order.order_at }}</td>
+                <td>{{ order.payment_type }}</td>
+                <td>{{ '-' if order.cash_amount is none or order.cash_amount == 0 else order.cash_amount }}</td>
+                <td>{{ '-' if order.cash_change is none or order.cash_change == 0 else order.cash_change }}</td>
                 <td>{{ order.has_receipt }}</td>
             </tr>
             {% endfor %}
         </tbody>
     </table>
-</body>
-</html>
+    <script>
+        function search(inputElement) {
+            var input = inputElement.value.toLowerCase();
+            var trs = document.querySelectorAll('#orderTable tbody tr');
+            trs.forEach(function(tr){
+                tr.style.display = tr.textContent.toLowerCase().includes(input) ? '' : 'none';
+            });
+        }
+    </script>
+{% endblock %}
