@@ -1,4 +1,5 @@
 from .dao import *
+from common.dto import *
 
 
 engine = create_engine("sqlite:///db/vending_machine.db")
@@ -46,3 +47,26 @@ def get_all_orders():
             )
 
         return order_list
+
+
+def update_product(product: ProductData):
+    with Session() as session:
+        db_product = session.query(Product).filter_by(id=product.product_id).first()
+        if not db_product:
+            return {"result": "error", "message": "Product not found"}
+
+        db_product.name = product.product_name
+        db_product.stock = product.stock
+        db_product.price = product.price
+        db_product.company_name = product.company_name
+        db_product.kcal = product.kcal
+        db_product.caffeine = product.caffeine
+        db_product.carbon_acid = (
+            bool(product.carbon_acid) if product.carbon_acid is not None else None
+        )
+        db_product.sugar = product.sugar
+        if product.image_path:
+            db_product.image_path = product.image_path
+
+        session.commit()
+        return {"result": "ok", "product_id": db_product.id}

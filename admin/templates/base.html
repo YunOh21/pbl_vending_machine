@@ -160,7 +160,7 @@
         .form-row select {
             flex: 1;
             height: 20px;
-            padding: 1px;
+            padding: 5px;
             border: 1.5px solid #d0d4da;
             border-radius: 6px;
             font-size: 1em;
@@ -207,8 +207,8 @@
 <body>
     <nav>
         <a href="/" class="{% if active_page == 'home' %}active{% endif %}">Home</a>
-        <a href="/admin/inventory" class="{% if active_page == 'inventory' %}active{% endif %}">상품현황</a>
-        <a href="/admin/orders" class="{% if active_page == 'orders' %}active{% endif %}">주문이력</a>
+        <a href="/inventory" class="{% if active_page == 'inventory' %}active{% endif %}">상품현황</a>
+        <a href="/orders" class="{% if active_page == 'orders' %}active{% endif %}">주문이력</a>
     </nav>
     <main>
         {% block content %}{% endblock %}

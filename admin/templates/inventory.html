@@ -153,9 +153,7 @@
             event.preventDefault();
             const form = document.getElementById('editForm');
             const formData = new FormData(form);
-
-            // formData에 파일 포함됨!
-            fetch('/your-upload-endpoint', {
+            fetch('/update', {
                 method: 'POST',
                 body: formData
             })
@@ -163,6 +161,7 @@
             .then(data => {
                 alert('수정 완료!');
                 closeModal();
+                location.reload(); // 페이지 새로고침
             })
             .catch(err => {
                 alert('업로드 실패!');
