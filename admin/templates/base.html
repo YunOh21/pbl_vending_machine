@@ -57,6 +57,7 @@
             background-color: #e3f2fd; /* 연한 파란색, 원하는 색상으로 바꿔도 됩니다 */
             cursor: pointer;
         }
+        /* 상품수정 버튼 */
         .edit-btn {
             display: inline-flex;
             align-items: center;
@@ -85,6 +86,7 @@
             font-size: 16px;
             margin-right: 2px;
         }
+        /* 팝업 창 */
         .modal {
             position: fixed;
             z-index: 1000;
@@ -115,8 +117,90 @@
             width: 70%; padding: 6px 10px; margin-bottom: 14px;
             border: 1px solid #ccc; border-radius: 5px;
         }
+        /* 상품수정 창 */
+        /* 폼 전체 */
+        #editModal .modal-content {
+            max-width: 420px;
+            margin: auto;
+            background: #fff;
+            border-radius: 16px;
+            box-shadow: 0 6px 32px rgba(0,0,0,0.18);
+            padding: 36px 32px 28px 32px;
+            font-family: 'Noto Sans KR', sans-serif;
+            font-size: 17px;
+        }
 
+        /* 제목 */
+        #editModal h2 {
+            font-size: 1.6em;
+            margin-bottom: 28px;
+            font-weight: 700;
+            color: #222;
+            letter-spacing: -1px;
+        }
 
+        /* 한 줄(가로) 배치 */
+        .form-row {
+            display: flex;
+            align-items: center;
+            margin-bottom: 18px;
+        }
+
+        /* 라벨 스타일 */
+        .form-row label {
+            min-width: 150px;
+            margin-right: 16px;
+            font-weight: 500;
+            color: #333;
+            font-size: 1em;
+        }
+
+        /* 인풋, 셀렉트 스타일 */
+        .form-row input,
+        .form-row select {
+            flex: 1;
+            height: 20px;
+            padding: 1px;
+            border: 1.5px solid #d0d4da;
+            border-radius: 6px;
+            font-size: 1em;
+            background: #fafbfc;
+            transition: border 0.2s;
+        }
+
+        .form-row select {
+            height: 30px;
+        }
+
+        .form-row input:focus,
+        .form-row select:focus {
+            border: 1.5px solid #4a90e2;
+            outline: none;
+            background: #fff;
+        }
+
+        /* 파일 업로드와 이미지 미리보기 */
+        .form-row.image-row {
+            display: flex;
+            align-items: center; /* 세로 가운데 정렬 */
+            margin-bottom: 18px;
+        }
+        #previewImage {
+            width: 150px;         
+            height: 150px;        
+            object-fit: contain;
+            margin-right: 16px;
+            border-radius: 8px;
+            display: block;
+            background: #f8f8f8;
+        }
+        #editProductImageFile {
+            flex: 1;
+            height: 40px;
+            box-sizing: border-box;
+            padding: 6px 10px;
+            width: 70%;
+        }
     </style>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
 </head>
