@@ -24,7 +24,7 @@ class VendingMachine(QWidget):
 
         self.show_product_list(True)
         self.create_all()
-        self.set_init_status(True)
+        self.set_init_status()
 
     def show_product_list(self, is_starting):
         if not is_starting:
@@ -195,7 +195,7 @@ class VendingMachine(QWidget):
             lambda: (
                 self.goodbye_bubble.hide(),
                 self.goodbye_text.hide(),
-                self.set_init_status(False),
+                self.set_init_status(),
             ),
         )
 
@@ -300,7 +300,7 @@ class VendingMachine(QWidget):
             self.info_soldout()
 
         if self.is_receipt:
-            self.set_init_status(False)
+            self.set_init_status()
         else:
             if self.payment_type == "CARD":
                 self.payment_type = "CASH"
@@ -310,9 +310,7 @@ class VendingMachine(QWidget):
             self.set_cash_btn()
             self.set_order_btn()
 
-    def set_init_status(self, is_starting):
-        self.show_product_list(is_starting)
-
+    def set_init_status(self):
         self.is_receipt = False
         self.is_change = False
         self.is_payment_processing = False
@@ -443,6 +441,8 @@ class VendingMachine(QWidget):
                     Qt.SmoothTransformation,
                 )
                 self.receive_drink_img.setPixmap(scaled_pixmap)
+
+            self.show_product_list(False)  # 재고 표시 수정
             self.receive_drink_img.show()
 
             # "받았습니다" 버튼 표시
