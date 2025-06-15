@@ -39,5 +39,10 @@ def update_product():
     return admin_controller.update_product(form_data, file)
 
 
+@app.route("/shutdown", methods=["POST"])
+def shutdown():
+    return admin_controller.shutdown()
+
+
 if __name__ == "__main__":
     app.run(debug=True)

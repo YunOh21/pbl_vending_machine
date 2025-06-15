@@ -91,3 +91,8 @@ def update_product(form_data, file):
     except Exception as e:
         logger.error("update_product Exception {e}")
         return {"result": "error", "message": "Unexpected error occurred: " + str(e)}
+
+
+def shutdown():
+    logger.debug("shutdown")
+    return db_admin.update_all_zero()

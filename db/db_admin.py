@@ -96,4 +96,18 @@ def update_product(product: ProductData):
             return {"result": "ok", "product_id": db_product.id}
     except Exception as e:
         logger.error(f"update_product Exception: {e}", exc_info=True)
+        session.rollback()
+        return {"result": "error", "message": "Unexpected error occurred: " + str(e)}
+
+
+def update_all_zero():
+    logger.debug("update_all_zero")
+    try:
+        with Session() as session:
+            session.query(Product).update({Product.stock: 0})
+            session.commit()
+            return {"result": "ok"}
+    except Exception as e:
+        logger.error(f"Error in update_all_zero: {e}")
+        session.rollback()
         return {"result": "error", "message": "Unexpected error occurred: " + str(e)}
