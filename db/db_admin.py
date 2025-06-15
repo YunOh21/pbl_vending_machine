@@ -7,24 +7,25 @@ from datetime import datetime
 logging.basicConfig(
     level=logging.DEBUG, format="%(asctime)s [%(levelname)s] %(name)s: %(message)s"
 )
+logger = logging.getLogger("db_admin")
 
 engine = create_engine("sqlite:///db/vending_machine.db")
 Session = sessionmaker(bind=engine)
 
 
 def get_all_products():
-    logging.info("db_admin: get_all_products")
+    logging.info("get_all_products")
     try:
         with Session() as session:
             product_list = session.query(Product).all()
             return product_list
     except Exception as e:
-        logging.error(f"get_all_products error: {e}", exc_info=True)
+        logging.error(f"get_all_products Exception: {e}", exc_info=True)
         return {"result": "error", "message": str(e)}
 
 
 def get_all_orders():
-    logging.info("db_admin: get_all_orders")
+    logging.info("get_all_orders")
     try:
         with Session() as session:
             orders = (
@@ -61,12 +62,12 @@ def get_all_orders():
 
             return order_list
     except Exception as e:
-        logging.error(f"get_all_orders error: {e}", exc_info=True)
+        logging.error(f"get_all_orders Exception: {e}", exc_info=True)
         return {"result": "error", "message": str(e)}
 
 
 def update_product(product: ProductData):
-    logging.debug("db_admin: update_product")
+    logging.debug("update_product")
     try:
         with Session() as session:
             db_product = session.query(Product).filter_by(id=product.product_id).first()
@@ -91,5 +92,5 @@ def update_product(product: ProductData):
             session.commit()
             return {"result": "ok", "product_id": db_product.id}
     except Exception as e:
-        logging.error(f"db_admin: update_product Exception: {e}", exc_info=True)
+        logging.error(f"update_product Exception: {e}", exc_info=True)
         return {"result": "error", "message": "Unexpected error occurred: " + str(e)}

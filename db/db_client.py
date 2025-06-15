@@ -7,6 +7,7 @@ logging.basicConfig(
     level=logging.DEBUG,
     format="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
 )
+logging.getLogger("db_client")
 
 engine = create_engine("sqlite:///db/vending_machine.db")
 Session = sessionmaker(bind=engine)

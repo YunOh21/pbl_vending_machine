@@ -8,18 +8,21 @@ import logging
 logging.basicConfig(
     level=logging.DEBUG, format="%(asctime)s [%(levelname)s] %(name)s: %(message)s"
 )
+logging.getLogger("admin_controller")
 
 
 def get_all_products():
+    logging.debug("get_all_products")
     return db_admin.get_all_products()
 
 
 def get_all_orders():
+    logging.debug("get_all_orders")
     return db_admin.get_all_orders()
 
 
 def update_product(form_data, file):
-    logging.debug("admin_controller:update_product")
+    logging.debug("update_product")
     try:
         if file and hasattr(file, "filename") and file.filename:
             filename = secure_filename(file.filename)
@@ -83,8 +86,8 @@ def update_product(form_data, file):
         return db_admin.update_product(product)
 
     except ValueError as ve:
-        logging.error("admin_controller:update_product ValueError {ve}")
+        logging.error("update_product ValueError {ve}")
         return {"result": "error", "message": str(ve)}
     except Exception as e:
-        logging.error("admin_controller:update_product Exception {e}")
+        logging.error("update_product Exception {e}")
         return {"result": "error", "message": "Unexpected error occurred: " + str(e)}
