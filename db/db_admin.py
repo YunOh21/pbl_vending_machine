@@ -14,18 +14,18 @@ Session = sessionmaker(bind=engine)
 
 
 def get_all_products():
-    logging.info("get_all_products")
+    logger.info("get_all_products")
     try:
         with Session() as session:
             product_list = session.query(Product).all()
             return product_list
     except Exception as e:
-        logging.error(f"get_all_products Exception: {e}", exc_info=True)
+        logger.error(f"get_all_products Exception: {e}", exc_info=True)
         return {"result": "error", "message": str(e)}
 
 
 def get_all_orders():
-    logging.info("get_all_orders")
+    logger.info("get_all_orders")
     try:
         with Session() as session:
             orders = (
@@ -62,12 +62,12 @@ def get_all_orders():
 
             return order_list
     except Exception as e:
-        logging.error(f"get_all_orders Exception: {e}", exc_info=True)
+        logger.error(f"get_all_orders Exception: {e}", exc_info=True)
         return {"result": "error", "message": str(e)}
 
 
 def update_product(product: ProductData):
-    logging.debug("update_product")
+    logger.debug("update_product")
     try:
         with Session() as session:
             db_product = session.query(Product).filter_by(id=product.product_id).first()
@@ -81,16 +81,16 @@ def update_product(product: ProductData):
             db_product.kcal = product.kcal
             db_product.caffeine = product.caffeine
             db_product.carbon_acid = product.carbon_acid
-            logging.debug(f"carbon_acid to save: {db_product.carbon_acid}")
+            logger.debug(f"carbon_acid to save: {db_product.carbon_acid}")
 
             db_product.sugar = product.sugar
             db_product.image_path = product.image_path
             db_product.edited_at = datetime.now()
 
-            logging.debug(f"edited_at to save: {db_product.edited_at}")
+            logger.debug(f"edited_at to save: {db_product.edited_at}")
 
             session.commit()
             return {"result": "ok", "product_id": db_product.id}
     except Exception as e:
-        logging.error(f"update_product Exception: {e}", exc_info=True)
+        logger.error(f"update_product Exception: {e}", exc_info=True)
         return {"result": "error", "message": "Unexpected error occurred: " + str(e)}

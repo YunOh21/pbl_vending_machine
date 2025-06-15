@@ -7,23 +7,25 @@ logging.basicConfig(
     level=logging.DEBUG,
     format="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
 )
-logging.getLogger("db_client")
+logger = logging.getLogger("db_client")
 
 engine = create_engine("sqlite:///db/vending_machine.db")
 Session = sessionmaker(bind=engine)
 
 
 def get_all_products():
+    logger.debug("get_all_products")
     try:
         with Session() as session:
             product_list = session.query(Product).all()
             return product_list
     except Exception as e:
-        logging.error(f"get_all_products error: {e}", exc_info=True)
+        logger.error(f"get_all_products error: {e}", exc_info=True)
         return {"result": "error", "message": str(e)}
 
 
 def get_one_product(product_id):
+    logger.debug("get_one_product")
     try:
         with Session() as session:
             product = session.query(Product).filter_by(id=product_id).first()
@@ -31,11 +33,12 @@ def get_one_product(product_id):
                 return {"result": "error", "message": "상품이 존재하지 않습니다."}
             return product
     except Exception as e:
-        logging.error(f"get_one_product error: {e}", exc_info=True)
+        logger.error(f"get_one_product error: {e}", exc_info=True)
         return {"result": "error", "message": str(e)}
 
 
 def insert_order(order_dto: OrderData):
+    logger.debug("insert_order")
     try:
         with Session() as session:
             product = session.query(Product).filter_by(id=order_dto.product_id).first()
@@ -57,11 +60,12 @@ def insert_order(order_dto: OrderData):
             session.commit()
             return {"result": "ok", "order_id": order_dao.id}
     except Exception as e:
-        logging.error(f"insert_order error: {e}", exc_info=True)
+        logger.error(f"insert_order error: {e}", exc_info=True)
         return {"result": "error", "message": str(e)}
 
 
 def get_ordered_product(order_id):
+    logger.debug("get_ordered_product")
     try:
         with Session() as session:
             order = session.query(Order).filter_by(id=order_id).first()
@@ -69,11 +73,12 @@ def get_ordered_product(order_id):
                 return {"result": "error", "message": "주문이 존재하지 않습니다."}
             return {"result": "ok", "product_id": order.product_id}
     except Exception as e:
-        logging.error(f"get_ordered_product error: {e}", exc_info=True)
+        logger.error(f"get_ordered_product error: {e}", exc_info=True)
         return {"result": "error", "message": str(e)}
 
 
 def insert_receipt(order_id):
+    logger.debug("insert_receipt")
     try:
         with Session() as session:
             receipt_dao = Receipt(order_id=order_id)
@@ -81,5 +86,5 @@ def insert_receipt(order_id):
             session.commit()
             return {"result": "ok", "receipt_id": receipt_dao.id}
     except Exception as e:
-        logging.error(f"insert_receipt error: {e}", exc_info=True)
+        logger.error(f"insert_receipt error: {e}", exc_info=True)
         return {"result": "error", "message": str(e)}

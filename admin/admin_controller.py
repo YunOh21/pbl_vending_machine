@@ -8,21 +8,21 @@ import logging
 logging.basicConfig(
     level=logging.DEBUG, format="%(asctime)s [%(levelname)s] %(name)s: %(message)s"
 )
-logging.getLogger("admin_controller")
+logger = logging.getLogger("admin_controller")
 
 
 def get_all_products():
-    logging.debug("get_all_products")
+    logger.debug("get_all_products")
     return db_admin.get_all_products()
 
 
 def get_all_orders():
-    logging.debug("get_all_orders")
+    logger.debug("get_all_orders")
     return db_admin.get_all_orders()
 
 
 def update_product(form_data, file):
-    logging.debug("update_product")
+    logger.debug("update_product")
     try:
         if file and hasattr(file, "filename") and file.filename:
             filename = secure_filename(file.filename)
@@ -63,7 +63,7 @@ def update_product(form_data, file):
         caffeine = int(caffeine) if caffeine and caffeine.isdigit() else None
 
         carbon_acid_str = form_data.get("carbon_acid")
-        logging.debug(f"carbon_acid_str: {carbon_acid_str}")
+        logger.debug(f"carbon_acid_str: {carbon_acid_str}")
 
         carbon_acid = True if carbon_acid_str == "1" else False
 
@@ -86,8 +86,8 @@ def update_product(form_data, file):
         return db_admin.update_product(product)
 
     except ValueError as ve:
-        logging.error("update_product ValueError {ve}")
+        logger.error("update_product ValueError {ve}")
         return {"result": "error", "message": str(ve)}
     except Exception as e:
-        logging.error("update_product Exception {e}")
+        logger.error("update_product Exception {e}")
         return {"result": "error", "message": "Unexpected error occurred: " + str(e)}
