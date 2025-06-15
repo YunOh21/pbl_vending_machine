@@ -7,18 +7,28 @@ from common.dto import *
 def get_all_products():
     return db_admin.get_all_products()
 
+
 def get_all_orders():
     return db_admin.get_all_orders()
+
 
 def update_product(form_data, file):
     image_path = None
     try:
-        # 파일명 중복 방지 및 저장
-        if file and hasattr(file, 'filename') and file.filename:
+        if file and hasattr(file, "filename") and file.filename:
             filename = secure_filename(file.filename)
-            unique_filename = f"{uuid.uuid4().hex}_{filename}"
-            image_path = os.path.join("assets", unique_filename)
-            file.save(os.path.join("static", image_path))
+            save_dir = os.path.join("static", "assets")
+            os.makedirs(save_dir, exist_ok=True)
+            save_path = os.path.join(save_dir, filename)
+
+            # 파일명이 이미 존재하면 UUID 붙이기
+            if os.path.exists(save_path):
+                name, ext = os.path.splitext(filename)
+                filename = f"{name}_{uuid.uuid4().hex}{ext}"
+                save_path = os.path.join(save_dir, filename)
+
+            file.save(save_path)
+            image_path = os.path.join("assets", filename)
 
         # 입력값 검증 및 변환
         product_id = form_data.get("product_id")
@@ -30,12 +40,12 @@ def update_product(form_data, file):
             raise ValueError("product_name is required")
 
         stock = form_data.get("stock")
-        if stock is None or stock == '':
+        if stock is None or stock == "":
             raise ValueError("stock is required")
         stock = int(stock)
 
         price = form_data.get("price")
-        if price is None or price == '':
+        if price is None or price == "":
             raise ValueError("price is required")
         price = int(price)
 
@@ -50,7 +60,9 @@ def update_product(form_data, file):
         caffeine = int(caffeine) if caffeine and caffeine.isdigit() else None
 
         carbon_acid = form_data.get("carbon_acid")
-        carbon_acid = int(carbon_acid) if carbon_acid and carbon_acid.isdigit() else None
+        carbon_acid = (
+            int(carbon_acid) if carbon_acid and carbon_acid.isdigit() else None
+        )
 
         sugar = form_data.get("sugar")
         sugar = int(sugar) if sugar and sugar.isdigit() else None

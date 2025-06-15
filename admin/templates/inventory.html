@@ -100,7 +100,7 @@
                 </div>
                 <div class="form-row image-row">
                     <img id="previewImage">
-                    <input type="file" name="image_file" id="editProductImageFile" accept="image/*" onchange="previewImage(event)">
+                    <input type="file" name="image_file" id="editProductImageFile" accept="image/*" onchange="changeImage(event)">
                 </div>
                 <button type="submit" class="edit-btn"><i class="fa fa-check"></i> 저장</button>
             </form>
@@ -167,10 +167,14 @@
                 alert('업로드 실패!');
             });
         }
-        function previewImage(event) {
+        function changeImage(event) {
             const img = document.getElementById('previewImage');
-            img.src = URL.createObjectURL(event.target.files[0]);
-            img.style.display = 'block';
+            if (event.target.files && event.target.files[0]) {
+                img.src = URL.createObjectURL(event.target.files[0]);
+                img.style.display = 'block';
+            } else {
+                img.style.display = 'none';
+            }
         }
     </script>
 {% endblock %}
