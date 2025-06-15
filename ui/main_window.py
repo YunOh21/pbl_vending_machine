@@ -59,9 +59,11 @@ class VendingMachine(QWidget):
                     btn.setProperty("price", price)
                     btn.setProperty("stock", stock)
 
-                    if not os.path.exists(img_path):
+                    assets_img_path = "assets/" + img_path
+
+                    if not os.path.exists(assets_img_path):
                         img_path = "assets/no_image.gif"
-                    img_label.setPixmap(QPixmap(img_path))
+                    img_label.setPixmap(QPixmap(assets_img_path))
                     price_label.setText(f"₩{price:,}")
                     stock_label.setText(f"재고: {stock}")
 
@@ -330,7 +332,7 @@ class VendingMachine(QWidget):
 
     def set_order_btn(self):
         if not self.is_soldout:
-            if self.payment_type == "CARD" or self.cash_amount != 0:
+            if self.payment_type == "CARD":
                 self.help_label.hide()
                 for btn in self.recommend.findChildren(QPushButton):
                     btn.setEnabled(True)

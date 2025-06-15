@@ -108,7 +108,7 @@ def main():
         Product(
             name="삼다수",
             stock=10,
-            price=1300,
+            price=900,
             company_name="제주삼다수",
             kcal=0,
             caffeine=0,
