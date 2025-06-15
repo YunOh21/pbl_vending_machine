@@ -432,9 +432,15 @@ class VendingMachine(QWidget):
 
             pixmap = QPixmap(img_path)
             if not pixmap.isNull():
-                # 세로 크기만 라벨에 맞춤, 가로는 자동(비율 유지)
-                scaled_pixmap = pixmap.scaledToHeight(
-                    self.receive_drink_img.height(), Qt.SmoothTransformation
+                img_label = QLabel()
+                img_label.setFixedSize(100, 100)
+                img_label.setAlignment(Qt.AlignCenter)
+
+                scaled_pixmap = pixmap.scaled(
+                    img_label.width(),
+                    img_label.height(),
+                    Qt.IgnoreAspectRatio,
+                    Qt.SmoothTransformation,
                 )
                 self.receive_drink_img.setPixmap(scaled_pixmap)
             self.receive_drink_img.show()
