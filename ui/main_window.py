@@ -373,7 +373,7 @@ class VendingMachine(QWidget):
 
     def set_order_btn(self):
         # 1. 주문 처리 중이면 모든 버튼 비활성화
-        if self.is_order_processing:
+        if self.is_order_processing or self.is_soldout:
             for btn in self.recommend.findChildren(QPushButton):
                 btn.setEnabled(False)
             for btn in self.products.findChildren(QPushButton):
