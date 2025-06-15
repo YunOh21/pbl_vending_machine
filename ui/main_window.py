@@ -22,15 +22,31 @@ class VendingMachine(QWidget):
         uic.loadUi("ui/vending_machine.ui", self)
         self.setWindowTitle("자판기")
 
-        self.show_product_list()
+        self.show_product_list(True)
         self.create_all()
-        self.set_init_status()
+        self.set_init_status(True)
 
-    def show_product_list(self):
+    def show_product_list(self, is_starting):
+        if not is_starting:
+            # 1. 기존 레이아웃과 위젯 완전 제거
+            old_layout = self.products.layout()
+            if old_layout is not None:
+                while old_layout.count():
+                    item = old_layout.takeAt(0)
+                    widget = item.widget()
+                    if widget is not None:
+                        widget.setParent(None)
+                        widget.deleteLater()
+                # 레이아웃 자체도 삭제
+                QWidget().setLayout(old_layout)  # 기존 레이아웃을 orphan 시킴
+
         self.product_list = core_controller.get_all_products()
         self.is_soldout = all(product.stock == 0 for product in self.product_list)
 
-        products = QGridLayout(self.products)
+        # 2. 새 레이아웃 할당
+        products = QGridLayout()
+        self.products.setLayout(products)
+
         for i in range(3):
             for j in range(4):
                 vbox = QVBoxLayout()
@@ -42,7 +58,6 @@ class VendingMachine(QWidget):
                     "background-color: #eee; border: 1px solid #ccc;"
                 )
 
-                # stock_label을 img_label의 자식으로 생성
                 stock_label = QLabel(img_label)
                 stock_label.setAlignment(Qt.AlignBottom | Qt.AlignRight)
                 stock_label.setStyleSheet(
@@ -65,11 +80,12 @@ class VendingMachine(QWidget):
                     btn.setProperty("id", id)
                     btn.setProperty("price", price)
                     btn.setProperty("stock", stock)
+                    btn.clicked.connect(self.place_order_by_id)
 
                     assets_img_path = "assets/" + img_path
 
                     if not os.path.exists(assets_img_path):
-                        img_path = "assets/no_image.gif"
+                        assets_img_path = "assets/no_image.gif"
                     img_label.setPixmap(QPixmap(assets_img_path))
                     price_label.setText(f"₩{price:,}")
                     stock_label.setText(f"재고: {stock}")
@@ -128,9 +144,6 @@ class VendingMachine(QWidget):
             btn.clicked.connect(self.set_cash_status)
         self.return_cash_btn.clicked.connect(self.return_cash)
 
-        for btn in self.products.findChildren(QPushButton):
-            btn.clicked.connect(self.place_order_by_id)
-
         self.receive_drink_btn.clicked.connect(self.on_drink_received)
         self.change_btn.clicked.connect(self.on_change_received)
 
@@ -182,7 +195,7 @@ class VendingMachine(QWidget):
             lambda: (
                 self.goodbye_bubble.hide(),
                 self.goodbye_text.hide(),
-                self.set_init_status(),
+                self.set_init_status(False),
             ),
         )
 
@@ -287,7 +300,7 @@ class VendingMachine(QWidget):
             self.info_soldout()
 
         if self.is_receipt:
-            self.set_init_status()
+            self.set_init_status(False)
         else:
             if self.payment_type == "CARD":
                 self.payment_type = "CASH"
@@ -297,7 +310,9 @@ class VendingMachine(QWidget):
             self.set_cash_btn()
             self.set_order_btn()
 
-    def set_init_status(self):
+    def set_init_status(self, is_starting):
+        self.show_product_list(is_starting)
+
         self.is_receipt = False
         self.is_change = False
         self.is_payment_processing = False

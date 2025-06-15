@@ -3,9 +3,12 @@ from sqlalchemy import func
 from .dao import *
 
 
+# outerjoin: 추천타입에 해당하는 상품이 주문이 없었던 경우에도 추천 가능
+
+
 def rec_caffeine(query: Query):
     return (
-        query.join(Order, Product.id == Order.product_id)
+        query.outerjoin(Order, Product.id == Order.product_id)
         .filter(Product.stock > 0)
         .group_by(Product.id)
         .order_by(Product.caffeine.desc(), func.count(Order.product_id).desc())
@@ -14,7 +17,7 @@ def rec_caffeine(query: Query):
 
 def rec_kcal(query: Query):
     return (
-        query.join(Order, Product.id == Order.product_id)
+        query.outerjoin(Order, Product.id == Order.product_id)
         .filter(Product.stock > 0)
         .group_by(Product.id)
         .order_by(Product.kcal.asc(), func.count(Order.product_id).desc())
@@ -23,7 +26,7 @@ def rec_kcal(query: Query):
 
 def rec_carbon_acid(query: Query):
     return (
-        query.join(Order, Product.id == Order.product_id)
+        query.outerjoin(Order, Product.id == Order.product_id)
         .filter(Product.stock > 0)
         .group_by(Product.id)
         .order_by(Product.carbon_acid.desc(), func.count(Order.product_id).desc())
@@ -32,7 +35,7 @@ def rec_carbon_acid(query: Query):
 
 def rec_no_caffeine(query: Query):
     return (
-        query.join(Order, Product.id == Order.product_id)
+        query.outerjoin(Order, Product.id == Order.product_id)
         .filter(Product.stock > 0, Product.caffeine == 0)
         .group_by(Product.id)
         .order_by(func.count(Order.product_id).desc())
@@ -41,7 +44,7 @@ def rec_no_caffeine(query: Query):
 
 def rec_any(query: Query):
     return (
-        query.join(Order, Product.id == Order.product_id)
+        query.outerjoin(Order, Product.id == Order.product_id)
         .filter(Product.stock > 0)
         .group_by(Product.id)
         .order_by(func.count(Order.product_id).desc())
