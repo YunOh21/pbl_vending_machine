@@ -17,7 +17,7 @@ def update_product(form_data, file):
     try:
         if file and hasattr(file, "filename") and file.filename:
             filename = secure_filename(file.filename)
-            save_dir = os.path.join("static", "assets")
+            save_dir = os.path.join("admin", "static", "assets")
             os.makedirs(save_dir, exist_ok=True)
             save_path = os.path.join(save_dir, filename)
 
