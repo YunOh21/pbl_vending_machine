@@ -2,6 +2,12 @@ import os
 from werkzeug.utils import secure_filename
 from db import db_admin
 from common.dto import *
+import logging
+
+
+logging.basicConfig(
+    level=logging.DEBUG, format="%(asctime)s [%(levelname)s] %(name)s: %(message)s"
+)
 
 
 def get_all_products():
@@ -13,7 +19,7 @@ def get_all_orders():
 
 
 def update_product(form_data, file):
-    print("hi", flush=True)
+    logging.debug("admin_controller:update_product")
     try:
         if file and hasattr(file, "filename") and file.filename:
             filename = secure_filename(file.filename)
@@ -21,6 +27,8 @@ def update_product(form_data, file):
             os.makedirs(save_dir, exist_ok=True)
             save_path = os.path.join(save_dir, filename)
             file.save(save_path)
+        else:
+            filename = form_data.get("old_image_path")
 
         # 입력값 검증 및 변환
         product_id = form_data.get("product_id")
@@ -52,7 +60,9 @@ def update_product(form_data, file):
         caffeine = int(caffeine) if caffeine and caffeine.isdigit() else None
 
         carbon_acid_str = form_data.get("carbon_acid")
-        carbon_acid = True if carbon_acid_str == 1 else False
+        logging.debug(f"carbon_acid_str: {carbon_acid_str}")
+
+        carbon_acid = True if carbon_acid_str == "1" else False
 
         sugar = form_data.get("sugar")
         sugar = int(sugar) if sugar and sugar.isdigit() else None
@@ -73,6 +83,8 @@ def update_product(form_data, file):
         return db_admin.update_product(product)
 
     except ValueError as ve:
+        logging.error("admin_controller:update_product ValueError {ve}")
         return {"result": "error", "message": str(ve)}
     except Exception as e:
+        logging.error("admin_controller:update_product Exception {e}")
         return {"result": "error", "message": "Unexpected error occurred: " + str(e)}

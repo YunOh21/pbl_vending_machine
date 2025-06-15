@@ -1,10 +1,11 @@
 import logging
+
 from .dao import *
 from common.dto import *
 from datetime import datetime
 
 logging.basicConfig(
-    level=logging.INFO, format="%(asctime)s [%(levelname)s] %(name)s: %(message)s"
+    level=logging.DEBUG, format="%(asctime)s [%(levelname)s] %(name)s: %(message)s"
 )
 
 engine = create_engine("sqlite:///db/vending_machine.db")
@@ -12,6 +13,7 @@ Session = sessionmaker(bind=engine)
 
 
 def get_all_products():
+    logging.info("db_admin: get_all_products")
     try:
         with Session() as session:
             product_list = session.query(Product).all()
@@ -22,6 +24,7 @@ def get_all_products():
 
 
 def get_all_orders():
+    logging.info("db_admin: get_all_orders")
     try:
         with Session() as session:
             orders = (
@@ -63,7 +66,7 @@ def get_all_orders():
 
 
 def update_product(product: ProductData):
-    logging.info("update_product start")
+    logging.debug("db_admin: update_product")
     try:
         with Session() as session:
             db_product = session.query(Product).filter_by(id=product.product_id).first()
@@ -77,15 +80,16 @@ def update_product(product: ProductData):
             db_product.kcal = product.kcal
             db_product.caffeine = product.caffeine
             db_product.carbon_acid = product.carbon_acid
+            logging.debug(f"carbon_acid to save: {db_product.carbon_acid}")
+
             db_product.sugar = product.sugar
-            if product.image_path:
-                db_product.image_path = product.image_path
+            db_product.image_path = product.image_path
             db_product.edited_at = datetime.now()
 
-            logging.info(f"edited_at to save: {db_product.edited_at}")
+            logging.debug(f"edited_at to save: {db_product.edited_at}")
 
             session.commit()
             return {"result": "ok", "product_id": db_product.id}
     except Exception as e:
-        logging.error(f"Update error: {e}", exc_info=True)
-        return {"result": "error", "message": str(e)}
+        logging.error(f"db_admin: update_product Exception: {e}", exc_info=True)
+        return {"result": "error", "message": "Unexpected error occurred: " + str(e)}

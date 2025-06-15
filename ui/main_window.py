@@ -4,7 +4,7 @@ from PyQt5.QtCore import *
 from PyQt5 import uic
 import sys, os
 
-from core import controller
+from core import core_controller
 from common.dto import *
 
 
@@ -20,7 +20,7 @@ class VendingMachine(QWidget):
         self.set_init_status()
 
     def show_product_list(self):
-        self.product_list = controller.get_all_products()
+        self.product_list = core_controller.get_all_products()
         self.is_soldout = all(product.stock == 0 for product in self.product_list)
 
         products = QGridLayout(self.products)
@@ -191,7 +191,7 @@ class VendingMachine(QWidget):
                 QMessageBox.Yes,
             )
             if reply == QMessageBox.Yes:
-                controller.add_receipt(self.order_id)
+                core_controller.add_receipt(self.order_id)
                 QMessageBox.information(
                     self,
                     "영수증",
@@ -220,7 +220,7 @@ class VendingMachine(QWidget):
             change=change,
         )
 
-        self.order_id = controller.place_order(order_dto)
+        self.order_id = core_controller.place_order(order_dto)
         if self.order_id and self.payment_type == "CASH":
             self.cash_amount -= product_price
             self.set_cash_btn()
@@ -370,8 +370,8 @@ class VendingMachine(QWidget):
 
     def give_drink(self):
         if self.order_id:
-            product_id = controller.get_ordered_product(self.order_id)
-            product = controller.get_one_product(product_id)
+            product_id = core_controller.get_ordered_product(self.order_id)
+            product = core_controller.get_one_product(product_id)
             img_path = product.image_path
             if not os.path.exists(img_path):
                 img_path = "assets/no_image.gif"

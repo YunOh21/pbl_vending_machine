@@ -46,20 +46,20 @@ pip install -r requirements.txt
 
 ### 1. DB 생성 및 데이터 입력
 ```
-python -m db.db_starter
+python3 -m db.db_starter
 ```
 
 ### 2. 자판기 (PyQt)
 - 자판기이므로 IoT로 구현가능하도록 PyQt로 UI를 제작했습니다.
 ```
-python -m ui.main_window
+python3 -m ui.main_window
 ```
 
 ### 3. 자판기 관리자 (웹페이지)
 - 로컬호스트에서 실행됩니다.
 - 관리자가 PC에서 접속하는 페이지로 가정하고 Flask를 사용하여 개발했습니다.
 ```
-python -m admin.app
+python3 -m admin.app
 ```
 
 ## 부가 기능: 이상행동 감지

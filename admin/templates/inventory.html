@@ -62,7 +62,7 @@
             <h2>상품 수정</h2>
             <form id="editForm" onsubmit="submitEdit(event)" enctype="multipart/form-data">
                 <input type="hidden" name="product_id" id="editProductId">
-
+                <input type="hidden" name="old_image_path" id="oldImagePath">
                 <div class="form-row">
                     <label>상품명</label>
                     <input type="text" name="product_name" id="editProductName" required>
@@ -116,7 +116,11 @@
             });
         }
         function openEditModal(id, name, stock, price, company, kcal, caffeine, carbon_acid, sugar, image_path) {
+            // hidden values
             document.getElementById('editProductId').value = id;
+            document.getElementById('oldImagePath').value = image_path;
+
+            // editable values
             document.getElementById('editProductName').value = name;
             document.getElementById('editProductStock').value = stock;
             document.getElementById('editProductPrice').value = price;
@@ -159,9 +163,13 @@
             })
             .then(res => res.json())
             .then(data => {
-                alert('수정 완료!');
-                closeModal();
-                location.reload(); // 페이지 새로고침
+                if (data.result === "ok") {
+                    alert('수정 완료!');
+                    closeModal();
+                    location.reload();
+                } else {
+                    alert(data.message || '업로드 실패!');
+                }
             })
             .catch(err => {
                 alert('업로드 실패!');

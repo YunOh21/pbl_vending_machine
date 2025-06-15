@@ -1,5 +1,5 @@
 from flask import Flask, render_template, request, send_from_directory
-from . import controller
+from . import admin_controller
 import os
 
 app = Flask(__name__)
@@ -20,7 +20,7 @@ def admin():
 
 @app.route("/inventory")
 def inventory():
-    product_list = controller.get_all_products()
+    product_list = admin_controller.get_all_products()
     return render_template(
         "inventory.html", products=product_list, active_page="inventory"
     )
@@ -28,7 +28,7 @@ def inventory():
 
 @app.route("/orders")
 def orders():
-    order_list = controller.get_all_orders()
+    order_list = admin_controller.get_all_orders()
     return render_template("orders.html", orders=order_list, active_page="orders")
 
 
@@ -36,7 +36,7 @@ def orders():
 def update_product():
     form_data = dict(request.form)
     file = request.files.get("image_file")
-    return controller.update_product(form_data, file)
+    return admin_controller.update_product(form_data, file)
 
 
 if __name__ == "__main__":
