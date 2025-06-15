@@ -42,6 +42,13 @@ PBL_VENDING_MACHINE/
 ```
 pip install -r requirements.txt
 ```
+- 개발환경은 python 3.12.3, ubuntu 24.04입니다.
+- Qt 앱 실행을 위해서는 OS에 Qt가 설치 되어 있어야 합니다.
+- ubuntu 기준으로는 다음 명령어로 설치 가능합니다.
+```
+sudo apt update
+sudo apt install python3-pyqt5
+```
 
 ### 1. DB 생성 및 데이터 입력
 ```
