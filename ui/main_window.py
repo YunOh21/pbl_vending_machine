@@ -104,7 +104,7 @@ class VendingMachine(QWidget):
             btn = QPushButton(text)
             btn.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
             btn.setProperty("type", type)
-            btn.clicked.connect(self.place_rec_order)
+            btn.clicked.connect(self.place_order_by_rec)
             recommend.addWidget(btn)
 
         cash = QGridLayout(self.cash_box)
@@ -129,10 +129,7 @@ class VendingMachine(QWidget):
         self.return_cash_btn.clicked.connect(self.return_cash)
 
         for btn in self.products.findChildren(QPushButton):
-            btn.clicked.connect(self.place_order)
-
-        for btn in self.recommend.findChildren(QPushButton):
-            btn.clicked.connect(self.place_rec_order)
+            btn.clicked.connect(self.place_order_by_id)
 
         self.receive_drink_btn.clicked.connect(self.on_drink_received)
         self.change_btn.clicked.connect(self.on_change_received)
@@ -177,7 +174,7 @@ class VendingMachine(QWidget):
 
         self.change_box.hide()
         self.cash_amount = 0
-        self.is_processing = False
+        self.is_payment_processing = False
         self.order_id = None
 
         QTimer.singleShot(
@@ -201,7 +198,7 @@ class VendingMachine(QWidget):
             self.change_btn.setText(f"₩{self.cash_amount:,} 받기")
             self.change_btn.show()
         else:
-            self.is_processing = False
+            self.is_payment_processing = False
             # 카드 결제 시 영수증 수령 여부 팝업
             reply = QMessageBox.question(
                 self,
@@ -224,10 +221,10 @@ class VendingMachine(QWidget):
 
             self.set_card_btn()
 
-    def place_order(self):
-        btn = self.sender()
-        product_id = btn.property("id")
-        product_price = btn.property("price")
+    def process_order(self, product_id, product_price):
+        self.is_order_processing = True
+        self.set_order_btn()
+
         change = None
         if self.payment_type == "CASH":
             change = self.cash_amount - product_price
@@ -245,40 +242,25 @@ class VendingMachine(QWidget):
             self.cash_amount -= product_price
             self.set_cash_btn()
         else:
-            self.is_processing = True
+            self.is_payment_processing = True
             self.set_card_btn()
         self.give_drink()
 
-    def place_rec_order(self):
+    def place_order_by_id(self):
         btn = self.sender()
-        type = btn.property("type")
+        product_id = btn.property("id")
+        product_price = btn.property("price")
+        self.process_order(product_id, product_price)
 
-        rec_product = core_controller.get_rec_product(type)
-
-        change = None
-        if self.payment_type == "CASH":
-            change = self.cash_amount - rec_product.price
-
-        order_dto = OrderData(
-            product_id=rec_product.id,
-            payment_type=self.payment_type,
-            input_cash_amount=self.cash_amount,
-            card_info=self.card_info,
-            change=change,
-        )
-
-        self.order_id = core_controller.place_order(order_dto)
-        if self.order_id and self.payment_type == "CASH":
-            self.cash_amount -= rec_product.price
-            self.set_cash_btn()
-        else:
-            self.is_processing = True
-            self.set_card_btn()
-        self.give_drink()
+    def place_order_by_rec(self):
+        btn = self.sender()
+        rec_type = btn.property("type")
+        rec_product = core_controller.get_rec_product(rec_type)
+        self.process_order(rec_product.id, rec_product.price)
 
     def return_cash(self):
         self.cash_amount = 0
-        self.is_processing = False
+        self.is_payment_processing = False
         self.set_card_btn()
         self.set_cash_btn()
         self.set_order_btn()
@@ -295,7 +277,7 @@ class VendingMachine(QWidget):
             self.info_soldout()
         btn = self.sender()
         self.cash_amount += btn.property("amount")
-        self.is_processing = True
+        self.is_payment_processing = True
         self.set_cash_btn()
         self.set_card_btn()
         self.set_order_btn()
@@ -318,7 +300,8 @@ class VendingMachine(QWidget):
     def set_init_status(self):
         self.is_receipt = False
         self.is_change = False
-        self.is_processing = False
+        self.is_payment_processing = False
+        self.is_order_processing = False
 
         self.payment_type = "CASH"
         self.cash_amount = 0
@@ -348,7 +331,7 @@ class VendingMachine(QWidget):
             self.card_btn.setText("카드를\n넣으세요")
             self.card_btn.setStyleSheet("")
 
-        if self.is_processing:
+        if self.is_payment_processing:
             self.card_btn.setText("결제중...")
             self.card_btn.setDisabled(True)
 
@@ -376,6 +359,15 @@ class VendingMachine(QWidget):
                 btn.setEnabled(False)
 
     def set_order_btn(self):
+        # 1. 주문 처리 중이면 모든 버튼 비활성화
+        if self.is_order_processing:
+            for btn in self.recommend.findChildren(QPushButton):
+                btn.setEnabled(False)
+            for btn in self.products.findChildren(QPushButton):
+                btn.setEnabled(False)
+            return  # 아래 로직 실행하지 않음
+
+        # 2. 기존 로직
         if not self.is_soldout:
             if self.payment_type == "CARD":
                 self.help_label.hide()
