@@ -17,6 +17,7 @@ class Product(Base):
     sugar = Column(Integer)
     text_info = Column(String)
     image_path = Column(String, nullable=False)
+    edited_at = Column(TIMESTAMP)
 
 
 class Order(Base):

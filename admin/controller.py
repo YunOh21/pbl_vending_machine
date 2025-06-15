@@ -13,6 +13,7 @@ def get_all_orders():
 
 
 def update_product(form_data, file):
+    print("hi", flush=True)
     try:
         if file and hasattr(file, "filename") and file.filename:
             filename = secure_filename(file.filename)
@@ -50,10 +51,8 @@ def update_product(form_data, file):
         caffeine = form_data.get("caffeine")
         caffeine = int(caffeine) if caffeine and caffeine.isdigit() else None
 
-        carbon_acid = form_data.get("carbon_acid")
-        carbon_acid = (
-            int(carbon_acid) if carbon_acid and carbon_acid.isdigit() else None
-        )
+        carbon_acid_str = form_data.get("carbon_acid")
+        carbon_acid = True if carbon_acid_str == 1 else False
 
         sugar = form_data.get("sugar")
         sugar = int(sugar) if sugar and sugar.isdigit() else None
@@ -71,10 +70,7 @@ def update_product(form_data, file):
             image_path=filename,
         )
 
-        # 실제 DB 업데이트 호출
-        db_admin.update_product(product)
-
-        return {"result": "ok", "product": product.__dict__}
+        return db_admin.update_product(product)
 
     except ValueError as ve:
         return {"result": "error", "message": str(ve)}
