@@ -18,6 +18,9 @@ def get_all_products():
     try:
         with Session() as session:
             product_list = session.query(Product).all()
+            for product in product_list:
+                if product.edited_at:
+                    product.edited_at = product.edited_at.strftime("%Y-%m-%d %H:%M:%S")
             return product_list
     except Exception as e:
         logger.error(f"get_all_products Exception: {e}", exc_info=True)

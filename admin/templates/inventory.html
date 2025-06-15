@@ -17,6 +17,7 @@
                 <th>당</th>
                 <th class="img-col">이미지</th>
                 <th>수정</th>
+                <th>최종 수정 시점</th>
             </tr>
         </thead>
         <tbody>
@@ -29,7 +30,7 @@
                 <td>{{ product.company_name }}</td>
                 <td>{{ product.kcal }}</td>
                 <td>{{ product.caffeine }}</td>
-                <td>{{ product.carbon_acid == 1 }}</td>
+                <td>{{ '있음' if product.carbon_acid == 1 else '없음' }}</td>
                 <td>{{ product.sugar }}</td>
                 <td class="img-col">
                     <img src="{{ url_for('assets', filename=product.image_path) }}" alt="{{ product.name }}">
@@ -51,6 +52,7 @@
                         <i class="fa fa-pen"></i>
                     </a>
                 </td>
+                <td>{{ '-' if product.edited_at is none else product.edited_at }}</td>
             </tr>
             {% endfor %}
         </tbody>
