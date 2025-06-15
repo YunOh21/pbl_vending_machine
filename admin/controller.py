@@ -1,4 +1,4 @@
-import os, uuid
+import os
 from werkzeug.utils import secure_filename
 from db import db_admin
 from common.dto import *
@@ -13,22 +13,13 @@ def get_all_orders():
 
 
 def update_product(form_data, file):
-    image_path = None
     try:
         if file and hasattr(file, "filename") and file.filename:
             filename = secure_filename(file.filename)
-            save_dir = os.path.join("admin", "static", "assets")
+            save_dir = os.path.join("assets")
             os.makedirs(save_dir, exist_ok=True)
             save_path = os.path.join(save_dir, filename)
-
-            # 파일명이 이미 존재하면 UUID 붙이기
-            if os.path.exists(save_path):
-                name, ext = os.path.splitext(filename)
-                filename = f"{name}_{uuid.uuid4().hex}{ext}"
-                save_path = os.path.join(save_dir, filename)
-
             file.save(save_path)
-            image_path = os.path.join("assets", filename)
 
         # 입력값 검증 및 변환
         product_id = form_data.get("product_id")
@@ -77,7 +68,7 @@ def update_product(form_data, file):
             caffeine=caffeine,
             carbon_acid=carbon_acid,
             sugar=sugar,
-            image_path=image_path,
+            image_path=filename,
         )
 
         # 실제 DB 업데이트 호출

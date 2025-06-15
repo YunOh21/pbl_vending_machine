@@ -32,7 +32,7 @@
                 <td>{{ product.carbon_acid == 1 }}</td>
                 <td>{{ product.sugar }}</td>
                 <td class="img-col">
-                    <img src="{{ url_for('static', filename=product.image_path) }}" alt="{{ product.name }}">
+                    <img src="{{ url_for('assets', filename=product.image_path) }}" alt="{{ product.name }}">
                 </td>
                 <td>
                     <a href="#" class="edit-btn"
@@ -137,7 +137,7 @@
             // 기존 이미지 미리보기
             const previewImg = document.getElementById('previewImage');
             if (image_path) {
-                previewImg.src = '/static/' + image_path;
+                previewImg.src = image_path;
                 previewImg.style.display = 'block';
             } else {
                 previewImg.style.display = 'none';

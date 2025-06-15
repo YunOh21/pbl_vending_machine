@@ -19,7 +19,7 @@ def main():
             carbon_acid=False,
             sugar=0,
             text_info="프랑스에서 온 고급 탄산수",
-            image_path="assets/evian.webp",
+            image_path="evian.webp",
         ),
         Product(
             name="핫식스",
@@ -31,7 +31,7 @@ def main():
             carbon_acid=True,
             sugar=50,
             text_info="잠깰 때 좋아요",
-            image_path="assets/hot6.jpg",
+            image_path="hot6.jpg",
         ),
         Product(
             name="바리스타",
@@ -43,7 +43,7 @@ def main():
             carbon_acid=False,
             sugar=15,
             text_info="진한 커피의 맛",
-            image_path="assets/barista.jpg",
+            image_path="barista.jpg",
         ),
         Product(
             name="레쓰비",
@@ -55,7 +55,7 @@ def main():
             carbon_acid=False,
             sugar=18,
             text_info="달콤한 커피음료",
-            image_path="assets/letsbe.jpg",
+            image_path="letsbe.jpg",
         ),
         Product(
             name="포카리",
@@ -67,7 +67,7 @@ def main():
             carbon_acid=False,
             sugar=12,
             text_info="이온음료의 대표주자",
-            image_path="assets/pocari.png",
+            image_path="pocari.png",
         ),
         Product(
             name="데자와",
@@ -79,7 +79,7 @@ def main():
             carbon_acid=False,
             sugar=20,
             text_info="홍차의 풍미",
-            image_path="assets/tejava.png",
+            image_path="tejava.png",
         ),
         Product(
             name="카페라테",
@@ -91,7 +91,7 @@ def main():
             carbon_acid=False,
             sugar=21,
             text_info="커피와 우유",
-            image_path="assets/latte.jpg",
+            image_path="latte.jpg",
         ),
         Product(
             name="몬스터",
@@ -103,7 +103,7 @@ def main():
             carbon_acid=True,
             sugar=35,
             text_info="시험기간에 함께해요",
-            image_path="assets/monster.webp",
+            image_path="monster.webp",
         ),
         Product(
             name="삼다수",
@@ -115,7 +115,7 @@ def main():
             carbon_acid=False,
             sugar=0,
             text_info="제주에서 왔어요",
-            image_path="assets/samda.png",
+            image_path="samda.png",
         ),
         Product(
             name="솔의눈",
@@ -127,7 +127,7 @@ def main():
             carbon_acid=False,
             sugar=2,
             text_info="누가 이거 먹자고 했냐",
-            image_path="assets/sol.jpg",
+            image_path="sol.jpg",
         ),
         Product(
             name="베지밀비",
@@ -139,7 +139,7 @@ def main():
             carbon_acid=False,
             sugar=3,
             text_info="건강한 비건 음료",
-            image_path="assets/soy.jpg",
+            image_path="soy.jpg",
         ),
         Product(
             name="이프로",
@@ -151,7 +151,7 @@ def main():
             carbon_acid=False,
             sugar=2,
             text_info="2% 부족할 때",
-            image_path="assets/2pro.jpg",
+            image_path="2pro.jpg",
         ),
     ]
 

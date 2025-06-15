@@ -1,7 +1,16 @@
-from flask import Flask, render_template, request
+from flask import Flask, render_template, request, send_from_directory
 from . import controller
+import os
 
 app = Flask(__name__)
+
+# assets 폴더의 절대 경로 구하기
+ASSETS_DIR = os.path.abspath(os.path.join(os.path.dirname(__file__), "..", "assets"))
+
+
+@app.route("/<path:filename>")
+def assets(filename):
+    return send_from_directory(ASSETS_DIR, filename)
 
 
 @app.route("/")
