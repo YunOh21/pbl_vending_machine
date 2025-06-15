@@ -12,7 +12,6 @@ PBL_VENDING_MACHINE/
 ├── core/          ← 주문 로직
 ├── db/            ← DB 접근 로직 (db_admin, db_client)
 ├── ui/            ← PyQt 기반 자판기 프론트엔드
-├── main.py        ← 자판기(PyQt) 실행
 ├── README.md
 └── requirements.txt
 ```
