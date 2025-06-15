@@ -3,9 +3,6 @@ from sqlalchemy import func
 from .dao import *
 
 
-# outerjoin: 추천타입에 해당하는 상품이 주문이 없었던 경우에도 추천 가능
-
-
 def rec_caffeine(query: Query):
     return (
         query.outerjoin(Order, Product.id == Order.product_id)
