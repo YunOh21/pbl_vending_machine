@@ -2,10 +2,17 @@ from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 from PyQt5 import uic
-import sys, os
+import sys, os, logging
 
 from core import core_controller
 from common.dto import *
+
+logging.basicConfig(
+    level=logging.DEBUG,
+    format="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
+)
+
+logger = logging.getLogger("main_window")
 
 
 class VendingMachine(QWidget):
@@ -86,10 +93,18 @@ class VendingMachine(QWidget):
 
     def create_all(self):
         recommend = QGridLayout(self.recommend)
-        for text in ["졸려요", "다이어트", "탄산", "무카페인", "아무거나"]:
+        button_info = [
+            ("졸려요", "caffeine"),
+            ("다이어트", "kcal"),
+            ("탄산", "carbon_acid"),
+            ("무카페인", "no_caffeine"),
+            ("아무거나", "any"),
+        ]
+        for text, type in button_info:
             btn = QPushButton(text)
             btn.setSizePolicy(QSizePolicy.Expanding, QSizePolicy.Expanding)
-            btn.setDisabled(True)
+            btn.setProperty("type", type)
+            btn.clicked.connect(self.place_rec_order)
             recommend.addWidget(btn)
 
         cash = QGridLayout(self.cash_box)
@@ -115,6 +130,9 @@ class VendingMachine(QWidget):
 
         for btn in self.products.findChildren(QPushButton):
             btn.clicked.connect(self.place_order)
+
+        for btn in self.recommend.findChildren(QPushButton):
+            btn.clicked.connect(self.place_rec_order)
 
         self.receive_drink_btn.clicked.connect(self.on_drink_received)
         self.change_btn.clicked.connect(self.on_change_received)
@@ -225,6 +243,33 @@ class VendingMachine(QWidget):
         self.order_id = core_controller.place_order(order_dto)
         if self.order_id and self.payment_type == "CASH":
             self.cash_amount -= product_price
+            self.set_cash_btn()
+        else:
+            self.is_processing = True
+            self.set_card_btn()
+        self.give_drink()
+
+    def place_rec_order(self):
+        btn = self.sender()
+        type = btn.property("type")
+
+        rec_product = core_controller.get_rec_product(type)
+
+        change = None
+        if self.payment_type == "CASH":
+            change = self.cash_amount - rec_product.price
+
+        order_dto = OrderData(
+            product_id=rec_product.id,
+            payment_type=self.payment_type,
+            input_cash_amount=self.cash_amount,
+            card_info=self.card_info,
+            change=change,
+        )
+
+        self.order_id = core_controller.place_order(order_dto)
+        if self.order_id and self.payment_type == "CASH":
+            self.cash_amount -= rec_product.price
             self.set_cash_btn()
         else:
             self.is_processing = True
@@ -374,7 +419,7 @@ class VendingMachine(QWidget):
         if self.order_id:
             product_id = core_controller.get_ordered_product(self.order_id)
             product = core_controller.get_one_product(product_id)
-            img_path = product.image_path
+            img_path = "assets/" + product.image_path
             if not os.path.exists(img_path):
                 img_path = "assets/no_image.gif"
 
