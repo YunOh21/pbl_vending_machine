@@ -1,5 +1,9 @@
 from .dao import *
 
+from common.logger import LoggerManager
+
+logger = LoggerManager.get_logger()
+
 
 def main():
     engine = create_engine("sqlite:///db/vending_machine.db")
@@ -161,3 +165,4 @@ def main():
 
 if __name__ == "__main__":
     main()
+    logger.info("DB successfully started")

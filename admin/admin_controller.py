@@ -2,13 +2,9 @@ import os
 from werkzeug.utils import secure_filename
 from db import db_admin
 from common.dto import *
-import logging
+from common.logger import LoggerManager
 
-
-logging.basicConfig(
-    level=logging.DEBUG, format="%(asctime)s [%(levelname)s] %(name)s: %(message)s"
-)
-logger = logging.getLogger("admin_controller")
+logger = LoggerManager.get_logger()
 
 
 def get_all_products():

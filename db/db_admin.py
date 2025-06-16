@@ -1,13 +1,10 @@
-import logging
+from datetime import datetime
 
 from .dao import *
 from common.dto import *
-from datetime import datetime
+from common.logger import LoggerManager
 
-logging.basicConfig(
-    level=logging.DEBUG, format="%(asctime)s [%(levelname)s] %(name)s: %(message)s"
-)
-logger = logging.getLogger("db_admin")
+logger = LoggerManager.get_logger()
 
 engine = create_engine("sqlite:///db/vending_machine.db")
 Session = sessionmaker(bind=engine)

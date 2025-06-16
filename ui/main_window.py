@@ -1,18 +1,15 @@
+import sys, os
+
+from core import core_controller
+from common.dto import *
+from common.logger import LoggerManager
+
+logger = LoggerManager.get_logger()
+
 from PyQt5.QtWidgets import *
 from PyQt5.QtGui import *
 from PyQt5.QtCore import *
 from PyQt5 import uic
-import sys, os, logging
-
-from core import core_controller
-from common.dto import *
-
-logging.basicConfig(
-    level=logging.DEBUG,
-    format="%(asctime)s [%(levelname)s] %(name)s: %(message)s",
-)
-
-logger = logging.getLogger("main_window")
 
 
 class VendingMachine(QWidget):
