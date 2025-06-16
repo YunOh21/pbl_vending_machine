@@ -4,7 +4,7 @@ from db import db_admin
 from common.dto import *
 from common.logger import LoggerManager
 
-logger = LoggerManager.get_logger()
+logger = LoggerManager().get_logger()
 
 
 def get_all_products():

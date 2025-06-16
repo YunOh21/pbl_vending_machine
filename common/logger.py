@@ -2,27 +2,34 @@ import logging
 
 
 class LoggerManager:
-    PROJECT_NAME = "vending_machine"
-    _loggers = {}
+    _instance = None
+    _initialized = False
 
-    @classmethod
-    def get_logger(cls):
-        logger_name = f"{cls.PROJECT_NAME}"
+    def __new__(cls):
+        if cls._instance is None:
+            cls._instance = super().__new__(cls)
+        return cls._instance
 
-        if logger_name not in cls._loggers:
-            logger = logging.getLogger(logger_name)
+    def __init__(self):
+        if not LoggerManager._initialized:
+            self.PROJECT_NAME = "vending_machine"
+            self._setup_logger()
+            LoggerManager._initialized = True
 
-            logger.setLevel(logging.DEBUG)
-            logger.propagate = False
+    def _setup_logger(self):
+        logger_name = f"{self.PROJECT_NAME}"
+        self.logger = logging.getLogger(logger_name)
 
-            if not logger.handlers:
-                handler = logging.StreamHandler()
-                formatter = logging.Formatter(
-                    "%(asctime)s [%(levelname)-5s] [%(name)s] %(module)-16s - %(message)s"
-                )
-                handler.setFormatter(formatter)
-                logger.addHandler(handler)
+        if not self.logger.handlers:
+            self.logger.setLevel(logging.DEBUG)
+            self.logger.propagate = False
 
-            cls._loggers[logger_name] = logger
+            handler = logging.StreamHandler()
+            formatter = logging.Formatter(
+                "%(asctime)s [%(levelname)-5s] [%(name)s] %(module)-16s - %(message)s"
+            )
+            handler.setFormatter(formatter)
+            self.logger.addHandler(handler)
 
-        return cls._loggers[logger_name]
+    def get_logger(self):
+        return self.logger

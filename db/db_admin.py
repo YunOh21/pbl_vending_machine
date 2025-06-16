@@ -4,7 +4,7 @@ from .dao import *
 from common.dto import *
 from common.logger import LoggerManager
 
-logger = LoggerManager.get_logger()
+logger = LoggerManager().get_logger()
 
 engine = create_engine("sqlite:///db/vending_machine.db")
 Session = sessionmaker(bind=engine)

@@ -2,7 +2,7 @@ from .dao import *
 
 from common.logger import LoggerManager
 
-logger = LoggerManager.get_logger()
+logger = LoggerManager().get_logger()
 
 
 def main():

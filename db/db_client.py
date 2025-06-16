@@ -6,7 +6,7 @@ from .rec_processor import get_rec_query_by_type
 from common.dto import *
 from common.logger import LoggerManager
 
-logger = LoggerManager.get_logger()
+logger = LoggerManager().get_logger()
 
 engine = create_engine("sqlite:///db/vending_machine.db")
 Session = sessionmaker(bind=engine)
