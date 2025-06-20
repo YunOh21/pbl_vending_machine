@@ -34,8 +34,6 @@ PBL_VENDING_MACHINE/
 - 데이터베이스 구조
 <img src="design/ERD.png">
 
-## 시연 영상
-
 ## 실행 방법
 - 모든 명령어는 프로젝트 루트 디렉토리에서 실행해주세요.
 ### 0. 외부 라이브러리 설치
@@ -73,3 +71,6 @@ python3 -m admin.app
 - 개발을 위해 [UCF Crime Dataset](https://www.crcv.ucf.edu/research/real-world-anomaly-detection-in-surveillance-videos)을 사용했습니다.
 - 현재 개발된 모델은 예측 정확도가 매우 낮으므로, 시각인공지능 학습 후 개선이 필요합니다.
 <img src="assets/CCTV_mediapipe_with_random_forest.gif">
+
+## 발표자료
+https://docs.google.com/presentation/d/1Z4Z0QWMRcPT2duYpKm6d9nI5J4S042MFAQvDt-VdTLo/edit?usp=sharing
